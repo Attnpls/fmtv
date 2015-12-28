@@ -1,0 +1,38 @@
+<md-dialog aria-label="New Design" flex="95">
+
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>New Design</h2>
+
+      <!--
+      <span flex></span>
+      <md-button class="md-raised md-primary" aria-label="Design Search" ng-click="openConfigurationsDialog()">Open a Saved Design</md-button>
+            <md-button class="md-icon-button" aria-label="Search" ng-click="openSearch()">
+        <md-icon aria-label="Search" md-svg-icon="magnify">
+          <md-tooltip>Find Saved Design</md-tooltip>
+        </md-icon>
+      </md-button> -->
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+
+    <md-grid-list
+      md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
+      md-row-height-gt-md="1:1" md-row-height="2:2"
+      md-gutter="12px" md-gutter-gt-sm="8px" >
+
+      <md-grid-tile class="typeTile" ng-repeat="thisType in ctrl.lkupConfigurationTypes" ng-click="ctrl.configuratorTypeClick(thisType.id)">
+        <!-- &text={{thisType}} -->
+        <img ng-src="{{thisType.img}}" alt="{{thisType.id | capitalize}}" width="100%"> 
+        <md-grid-tile-footer layout-align="center center" class="typeFooter">
+          {{thisType.id | capitalize}}
+        </md-grid-tile-footer>
+
+      </md-grid-tile>
+
+    </md-grid-list>
+
+  </md-dialog-content>
+
+</md-dialog>

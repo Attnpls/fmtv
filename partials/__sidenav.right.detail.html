@@ -1,0 +1,33 @@
+
+
+<!-- Sidenav Right Detail -->
+<md-sidenav  ui-view layout-fill  class="md-sidenav-right md-whiteframe-z3" md-component-id="detailPanel">
+
+	<md-toolbar  ng-click="toggleSidenav('detailPanel')" >
+	  <div class="md-toolbar-tools">
+	    <md-button class="md-icon-button" aria-label="Back">
+	      <md-icon md-svg-icon="larrow"></md-icon>
+	    </md-button>
+	    <h2>
+	      <span>Detail Panel</span>
+	    </h2>
+	  </div>
+	</md-toolbar>	
+
+	<md-content layout-padding ng-controller="RightCtrl">
+	    <p>Item Detail go here</p>
+		
+	    <form>
+	      <md-input-container>
+	        <label for="testInput">Test input</label>
+	        <input type="text" id="testInput"
+	               ng-model="data" md-sidenav-focus>
+	      </md-input-container>
+	    </form>
+		
+		<md-button  ng-click="toggleSidenav('detailPanel')" class="md-primary">
+	  		Select This Item
+		</md-button>
+	</md-content>
+	
+</md-sidenav>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="FMTVApp">
+  <head>
+    <title>Frame My TV Designer</title>    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <base href="/fmtv/app/" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+    <!-- Head
+    <link rel="stylesheet" href="https://gitcdn.xyz/repo/angular/bower-material/master/angular-material.css">
+    -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css">
+    <link rel="stylesheet" href="./libs/v-accordion/v-accordion.css"/>
+    <link rel="stylesheet" href="./libs/xeditable/css/xeditable.css">
+
+    <link rel="stylesheet" href="./css/app.css"/>
+  </head>
+
+  <body ng-controller="AppCtrl as app"  md-theme="{{site.theme}}">
+
+    <div ng-include="'partials/navbar.html'"></div>
+
+    <section id="main" layout="row" flex>
+        
+      <div ng-include="'partials/sidenav.left.html'"></div>  
+
+      <!-- Content - 2 columns: 40/60 -->
+      <div layout="column" layout-gt-md="row" flex layout-padding ng-hide="configuration.type.length == 0">
+
+        <div flex-gt-md="40" flex-order="1" ng-include="'partials/preview.html'">
+
+        </div>
+   
+        <div id="tabsColumn" flex flex-order="2" >
+
+          <md-tabs md-selected="selectedTabIndex" class="md-whiteframe-z1" md-no-pagination md-swipe-content md-border-bottom
+            md-dynamic-height>
+
+            <md-tab label="Design">
+              <md-content class="md-padding">
+                <div ng-include="'partials/design.html'" class="topAccPanel"></div>
+              </md-content>
+            </md-tab>
+
+            <md-tab label="Options">
+              <md-content class="md-padding">
+                <div ng-include="'partials/options.html'" class="topAccPanel"></div>
+              </md-content>
+            </md-tab>       
+
+            <md-tab label="Summary">
+              <md-content class="md-padding">
+                <div ng-include="'partials/summary.html'" style="height:100%"></div>
+              </md-content>
+            </md-tab>
+
+            <md-tab label="Save">
+              <md-content class="md-padding">
+                <div ng-include="'partials/order.html'"></div>
+              </md-content>
+            </md-tab> 
+
+          </md-tabs>
+
+        </div>
+
+      </div>
+
+      <div ng-include="'partials/design.frame.list.html'" layout="vertical"></div>
+      <div ng-include="'partials/design.frame.detail.html'"></div>
+      <div ng-include="'partials/design.art.list.html'"></div>    
+      <div ng-include="'partials/design.art.detail.html'"></div>
+      <div ng-include="'partials/page.detail.html'"></div>
+    </section>
+
+    <!-- Footer 
+    <md-toolbar id="footer" layout="row" layout-align="start center">
+        <div ng-click="help('Legal Disclaimer','configurator-legal')">Legal Disclaimer</div>
+        <div flex></div>
+    </md-toolbar>-->  
+
+    <!--  configuratorPages  mirrors
+    <pre>{{configuratorPages| json}}</pre>  --> 
+
+    <script src="libs/jquery/jquery-1.11.1.min.js"></script> 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-sanitize.min.js"></script>
+
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-cookies.min.js"></script>
+    -->
+
+    <!-- 0.11.1 required -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
+    <!-- head
+    <script src="https://gitcdn.xyz/repo/angular/bower-material/master/angular-material.js"></script> -->
+
+    <script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
+    <script src="libs/ui-bootstrap/ui-bootstrap-custom-tpls-0.13.4.min.js"></script>
+    <script src="libs/angular-underscore/underscore.js"></script>
+    <script src="libs/angular-underscore/angular-underscore.js"></script>
+    <script src="libs/xeditable/js/xeditable.js"></script>
+    <script src="libs/v-accordion/v-accordion.js"></script>
+    <script src="libs/fullscreen/angular-fullscreen.js"></script>
+
+    <script src="libs/ngInfiniteScroll/ng-infinite-scroll.min.js"></script>
+    <script src="libs/me-lazyload/me-lazyload.js"></script>
+
+    <!--[if lte IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Base64/0.3.0/base64.min.js"></script>
+    <![endif]-->
+    <script src="//cdn.jsdelivr.net/satellizer/0.13.2/satellizer.min.js"></script>  
+
+    <script src="js/app.js"></script> 
+    <script src="services/rules-engine-service.js"></script>
+
+    <!-- <script src="src/security/security.js"></script>  -->
+        <!--
+    <script src="libs/loading.js"></script> 
+
+
+    <script src="services/gallery-service.js"></script>
+    -->
+
+  </body>
+</html>

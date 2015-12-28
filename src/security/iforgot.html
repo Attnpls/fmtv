@@ -1,0 +1,84 @@
+<div class="row">   
+	<div class="col-md-12 ">
+		<!--
+		<p class="lead">If you can't remember your username or password, just provide us with some information and we'll help you reset your password.</p>
+		-->
+		<p class="lead">If you can't remember your login information, just provide us with your user name or email and we will email
+		you instructions about how you can reset your password.</p>
+		
+	</div>
+</div>
+
+<div class="row">   
+	<div class="col-md-6 col-md-offset-3">
+	
+   		<div class="panel panel-default">
+		  	<div class="panel-heading">
+		    	<h3 class="panel-title">Reset Your Password</h3>
+		 	</div>
+		  	<div class="panel-body">
+			
+			
+				<form name="resetFrm" ng-submit="doResetPassword(user)" novalidate class="form-horizontal">	
+					<!--
+					<div class="alert fade in alert-danger" style="display: none;">
+						<i class="icon-remove close" data-dismiss="alert"></i> Error message text. 
+					</div>
+					-->
+					
+                    <fieldset>
+                    	
+			    	  	<div class="form-group col-md-12" ng-class="hasError(resetFrm.email)">
+							<label class="control-label" for="email"><span class="required">*</span> Your username or email:</label>
+							<input name="email" ng-model="user.email" type="text" required class="form-control" autofocus="autofocus">						
+			    			<span class="help-block field-validation-error" ng-show="showError(resetFrm.email, 'required')">Required.</span>
+						</div>
+						
+						<!--
+						<div class="form-group">
+							<label class="control-label" for="textinput">Date of Birth:</label>
+							<input id="textinput" name="textinput" placeholder="mm/dd/yyyy" class="form-control input-md" required="" type="date">
+						</div>						
+						
+						<div class="form-group">
+						  <label class="control-label" for="selectbasic">Security Question:</label>
+						    <select id="selectbasic" name="selectbasic" class="form-control">
+						      <option>Please Choose</option>
+						      <option>Option two</option>
+						    </select>
+						</div>
+						
+						<div class="form-group">
+						  <label class="control-label" for="textinput">Answer:</label>
+						    <input id="textinput" name="textinput" placeholder="" class="form-control" required="" type="text">
+						</div>
+						-->
+					</fieldset>
+							
+					<div class="form-actions text-center"> 
+			    		<button class="submit btn btn-primary">Reset Password</button>
+						or <a href="#/">cancel</a>
+					</div>
+					
+
+		      	</form>
+				
+		    </div>
+		</div><!-- /panel -->
+
+
+	</div>
+</div>
+
+<div class="row">   
+	<div class="col-md-12 ">
+		<br>	
+		<p class="text-center" style="color:gray;">Unauthorized use of this site is prohibited and may result in civil and criminal prosecution.</p>
+	</div>
+</div>
+
+<!-- DEBUG 
+<br>
+<pre>{{resetFrm.email.$invalid | json}}</pre>
+<pre>{{user| json}}</pre>
+-->

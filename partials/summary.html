@@ -1,0 +1,321 @@
+
+<div  id="configurationID" layout="row">
+
+  <!--
+  <div ng-show="configuration.meta.configuration_id" flex layout-align="start center">
+    Design ID: {{configuration.meta.configuration_id}}
+  </div> 
+
+  <div ng-show="!configurationID" flex layout-align="start center">
+    New Design
+    <span class="link smaller" ng-click="save();">(please save)</span>
+  </div>
+   -->
+  <div class="subtitle"><strong>Design</strong></div>
+
+  <md-button aria-label="Help" ng-click="help('Order Summary','configurator-summary-info')" class="help">
+    <md-icon md-svg-icon="info"></md-icon>
+    <md-tooltip md-direction="bottom">Help</md-tooltip>
+  </md-button>  
+      
+</div>
+
+
+<table id="configurationSummary" class="table table-striped table-hover" cellspacing="0" border="0">
+
+  <!-- TV Size-->
+  <tr>
+    <td class="label">
+      TV Size
+    </td>
+    <td colspan="2">
+
+      <span ng-hide="configuration.tv.diagscreensize" class="alert link" ng-click="goTo('design','tv');">
+        <md-icon md-svg-icon="alert"></md-icon> Please set<span hide-sm flex>  TV Size</span>
+      </span>
+
+      <span ng-show="configuration.tv.diagscreensize >0">      
+        <ng-include src="'partials/design.tv.text.html'"></ng-include>
+        <div>
+          <span ng-show="tv.speakerlayout == 'h'">Horizontal</span>
+          <span ng-show="tv.speakerlayout == 'v'">Vertical</span>
+          <span ng-show="tv.speakerlayout !== 'h' && tv.speakerlayout !== 'v' ">Downfiring or no built-in</span>
+          speakers
+        </div>
+        <div ng-show="!configuration.tv.id && !configuration.tv.makemodel && configuration.tv.diagscreensize > 1" ng-click="goTo('design','tv');">
+          Model number to be provided at a later time.
+        </div>
+      </span>
+
+    </td>
+    <td align="right">
+      <div aria-label="Edit TV Size" ng-click="goTo('design','tv');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr>   
+
+  <!-- Frame Style -->
+  <tr ng-hide="configuration.type == 'frameless mirror'">
+    <td class="label">
+      Frame
+    </td>
+    <td>
+      <span ng-hide="configuration.frame.style.styleid" class="alert link" ng-click="goTo('design','frame');">
+        <md-icon md-svg-icon="alert"></md-icon> Please select<span hide-sm flex> a Frame</span>
+      </span>
+      <span ng-show="configuration.frame.style.styleid">
+        {{configuration.frame.style.caption}}
+        <!-- : {{configuration.frame.style.styleid}}  -->
+      </span>
+
+      <span ng-show="configuration.frame.style.category=='H' && configuration.frame.finish.finishid == null" class="alert" ng-click="goTo('design','frame');">
+        <md-icon md-svg-icon="alert"></md-icon> Please select<span hide-sm flex> a Finish</span>
+      </span>
+      <span ng-show="configuration.frame.finish.finishid">
+       in {{configuration.frame.finish.finishname}}   
+      </span>         
+    </td>
+    <td align="right">{{configuration.frame.style.price_style + configuration.frame.price_frame | currency }} </td>
+    <td align="right">
+      <div aria-label="Edit Frame" ng-click="goTo('design','frame');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr> 
+  
+   <!-- Liner -->
+  <tr ng-show="configuration.type != 'frameless mirror' && configuration.type != 'metro mirror' ">
+    <td class="label">
+      Liner Color
+    </td>
+    <td>
+      <span ng-hide="configuration.liner.linerid" class="alert link" ng-click="goTo('design','liner');">
+        <md-icon md-svg-icon="alert"></md-icon> Please select<span hide-sm flex> a Liner Color</span>
+      </span>
+      {{configuration.liner.linertext}}           
+    </td>
+    <td align="right">{{configuration.liner.price_liner | currency }} </td>
+    <td align="right">
+      <div aria-label="Edit Liner" ng-click="goTo('design','liner');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr> 
+   
+  <!-- Mirror -->
+  <tr ng-show="configuration.type.indexOf('mirror') > 0" >
+    <td class="label">
+      Mirror
+    </td>
+    <td>
+      <span ng-hide="configuration.mirror.mirrorid" class="alert link" ng-click="goTo('design','mirror');">
+        <md-icon md-svg-icon="alert"></md-icon> Please select<span hide-sm flex> a Mirror Type</span>
+      </span>
+      {{configuration.mirror.name}}           
+    </td>
+    <td align="right">{{configuration.mirror.price_mirror | currency }} </td>
+    <td align="right">
+      <div aria-label="Edit Mirror" ng-click="goTo('design','mirror');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr> 
+
+  <!-- Artwork Royalty -->
+  <tr ng-show="configuration.type.indexOf('art') > 0">
+    <td class="label">
+      Artwork Royalty
+    </td>
+    <td>
+      <span ng-hide="configuration.art.artid" class="alert link" ng-click="goTo('design','art');" >
+        <md-icon md-svg-icon="alert"></md-icon> Please select<span hide-sm flex> Artwork</span>
+      </span>
+      {{configuration.art.name}}          
+    </td>
+    <td align="right">{{configuration.art.price_art | currency }} </td>
+    <td align="right">
+      <div aria-label="Edit Art" ng-click="goTo('design','art');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr>       
+
+  <!-- Art Subframe -->
+  <tr ng-show="configuration.type.indexOf('art') > 0">
+    <td class="label">Art Cover</td>
+    <td>
+        Motorized Subframe
+    </td>
+    <td align="right">{{configuration.art.price_subframe | currency }} </td>
+    <td align="right">
+    </td>
+  </tr> 
+
+  <!-- Options -->
+  <tr class="subtitle">
+    <td colspan="4">
+      <br>
+      <strong>Options</strong>
+    </td>   
+  </tr> 
+      
+ <!-- TV Control -->
+  <tr>
+    <td class="label">
+      TV Control
+    </td>
+    <td>
+      <span ng-hide="configuration.tvcontrol.tvcontrolid >= 0" class="alert link" ng-click="goTo('options','tvcontrol');">
+        <md-icon md-svg-icon="alert"></md-icon> Please select<span hide-sm flex> TV Control option</span>
+      </span>
+      {{configuration.tvcontrol.tvcontroltext}}           
+    </td>
+    <td align="right">{{configuration.tvcontrol.price_tvcontrol | currency }} </td>
+    <td align="right">
+      <div aria-label="Edit TV Control" ng-click="goTo('options','tvcontrol');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr>       
+            
+  <!-- Art Control -->
+  <tr ng-show="configuration.art.artid">
+    <td class="label">
+      Art Control
+    </td>
+    <td>
+      <span ng-hide="configuration.artcontrol.artcontrolid" class="alert link" ng-click="goTo('options','artcontrol');">
+        <md-icon md-svg-icon="alert"></md-icon>Please select<span hide-sm flex>  Art Control option</span>
+      </span>
+      {{configuration.artcontrol.artcontroltext}}           
+    </td>
+    <td align="right">{{configuration.artcontrol.price_artcontrol | currency }} </td>
+    <td align="right">
+      <div aria-label="Edit Art Control" ng-click="goTo('options','artcontrol');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr>           
+
+  <!-- Side Depth - sidedepthid -->
+  <tr>
+    <td class="label">
+      Side Depth
+    </td>
+    <td>
+      {{configuration.sidedepth.sidedepthtext}}
+    </td>
+    <td align="right">{{configuration.sidedepth.price_sidedepth | currency }}</td>
+    <td align="right">
+      <div aria-label="Edit Side Depth Cover" ng-click="goTo('options','sidedepth');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr> 
+
+  <!-- Speaker Bar -->
+  <tr ng-show="configuration.art.artid">
+    <td class="label">
+      Speaker Bar
+    </td>
+    <td>
+      <span ng-show="configuration.speakerbar.hasspeakerbar == 0">None</span>
+      <span ng-show="configuration.speakerbar.hasspeakerbar == 1">
+        Model: {{configuration.speakerbar.makemodel}}
+          <span ng-hide="configuration.speakerbar.makemodel.length" class="alert link" 
+            ng-click="goTo('options','speakerbar');">
+            <md-icon md-svg-icon="alert"></md-icon> Please enter<span hide-sm flex> model number</span>
+          </span>
+          <br>
+        Mounted: {{configuration.speakerbar.mounted}}
+          <span ng-hide="configuration.speakerbar.mounted.length" class="alert link" 
+            ng-click="goTo('options','speakerbar');">
+            <md-icon md-svg-icon="alert"></md-icon> Please select
+          </span>
+          <br>        
+        Gap:  {{configuration.speakerbar.gap}} in. 
+        <div ng-show="configuration.speakerbar.instuctions">configuration.speakerbar.instuctions</div>      
+      </span>
+    </td>
+    <td align="right">{{configuration.speakerbar.price_speakerbar | currency }}</td>
+    <td align="right">
+      <div aria-label="Edit Speaker Bar" ng-click="goTo('options','speakers');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr> 
+
+  <!-- Installation method -->
+  <tr>
+    <td class="label">
+      Installation<span hide-sm> Method</span>
+    </td>
+    <td>
+      <span ng-hide="configuration.installmethod.installmethodid && configuration.mounted.type" class="alert link" 
+        ng-click="goTo('options','installation');">
+        <md-icon md-svg-icon="alert"></md-icon> Please select<span hide-sm flex> an Installation Method</span>
+      </span>
+      <span ng-show="configuration.installmethod.installmethodid && configuration.mounted.type"> 
+        <span ng-show="configuration.mounted.type=='R'">Recess </span> 
+        <span ng-show="configuration.mounted.type=='S'">Surface </span> 
+        Mounted with {{configuration.installmethod.installmethodtext}}
+      </span>
+    </td>
+    <td align="right">{{configuration.installmethod.price_installmethod | currency }}</td>
+    <td align="right">
+      <div aria-label="Edit Installation Method" ng-click="goTo('options','installation');" class="edit">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </div>
+    </td>
+  </tr>   
+
+  <!-- CUSTOM  -->
+
+  <!-- Total  -->
+  <tr class="subtitle">
+    <td colspan="2">
+      <br>
+      TOTAL
+    </td>
+    <td align="right">
+      <br>
+      <span ng-show="configuration.tv.diagscreensize">{{configuration.pricetotal | currency }}</span>
+    </td>
+    <td></td>
+  </tr> 
+
+</table>
+
+
+
+<br>
+<div layout="row">
+  <div flex>
+    <!--
+    <md-button md-no-ink class="md-primary" ng-click="save();"><md-icon md-svg-icon="save"></md-icon> Save</md-button>
+    <md-button md-no-ink class="md-primary" ng-click="save();"><md-icon md-svg-icon="print"></md-icon> Print</md-button>
+    <md-button md-no-ink class="md-primary" ng-click="save();"><md-icon md-svg-icon="share"></md-icon> Share</md-button>
+    
+    <md-button class="md-icon-button md-primary" ng-click="save();" aria-label="Save">
+      <md-icon md-svg-icon="save"></md-icon>
+      <md-tooltip md-direction="bottom">Save</md-tooltip>
+    </md-button>
+    <md-button md-no-ink class="md-icon-button md-primary" ng-click="save();" aria-label="Print">
+      <md-icon md-svg-icon="print"></md-icon>
+      <md-tooltip md-direction="bottom">Print</md-tooltip> 
+    </md-button>
+    <md-button md-no-ink class="md-icon-button md-primary" ng-click="save();" aria-label="Share">
+      <md-icon md-svg-icon="share"></md-icon>
+      <md-tooltip md-direction="bottom">Share</md-tooltip>
+    </md-button> -->
+
+  </div>
+  <div class="md-actions link" ng-click="goTo('order');"> 
+    <!-- Order -->
+    <md-button class="md-fab md-mini md-primary" aria-label="Summary">
+      <md-icon md-svg-icon="arrowr"></md-icon>
+      <md-tooltip md-direction="left">Order</md-tooltip>
+    </md-button>
+  </div>
+</div>

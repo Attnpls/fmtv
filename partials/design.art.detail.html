@@ -1,0 +1,61 @@
+<md-sidenav  ui-view layout-fill  class="md-sidenav-right md-whiteframe-z3" md-component-id="artDetailPanel">
+
+  <md-toolbar  ng-click="toggleSidenav('artDetailPanel')" >
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" aria-label="Back">
+        <md-icon md-svg-icon="cheveronL"></md-icon>
+      </md-button>
+      <h2>
+        {{panelTitle}}: {{item.name}}
+      </h2>
+    </div>
+  </md-toolbar> 
+
+  <md-content layout-padding>
+    <div class="artImg">
+      <img lazy-src="{{item.url}}" alt="{{item.name}}" fullscreen > 
+      <div class="caption">Click to view fullscreen.</div>
+    </div>
+
+
+    <h3>{{item.name}}</h3>
+    <div class="price">
+      Artist: {{item.byline}}<br>
+      Art ID:  {{item.headline}}<br>
+      <span ng-hide="configuration.tv.diagscreensize" 
+        class="alert link"
+        ng-click="goTo('design','tv');"
+        layout="row" layout-align="start middle">
+        <md-icon md-svg-icon="alert"></md-icon> <span flex>Please Set TV Size for Price</span>
+      </span>
+      <span ng-show="configuration.tv.diagscreensize">
+        Artist's Royalty: {{calculateArtPrice(item.credit) | currency}}<br>
+        Motorized Artwork Subframe: {{calculateArtSubframePrice(item.credit) | currency }} 
+      </span>       
+    </div>
+
+    <br>
+
+    <md-button  ng-click="selectArtwork(item)" class="md-raised md-primary">
+      Select this Artwork
+    </md-button>
+
+      <!--
+              <div class="sampleLinks">
+                  <button type="button" class="btn btn-default btn-xs" >Order Sample</button>             
+                </div>                
+                
+                <div class="actionLinks">
+                  <span ng-click="$parent.$parent.itemFavorite( item.headline )">
+                    <span class="glyphicon glyphicon-heart"></span> Save to My Favorites
+                  </span>
+                  &nbsp;&nbsp;
+                  <span ng-click="$parent.$parent.itemPDF( item.headline )">
+                    <span class="glyphicon glyphicon-download"></span> PDF
+                  </span>
+                </div>
+      -->
+  </md-content>
+  
+</md-sidenav>
+

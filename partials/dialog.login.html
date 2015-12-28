@@ -1,0 +1,57 @@
+<md-dialog aria-label="Login">
+  
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Please Sign In</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="closeDialog()">
+        <md-icon md-svg-icon="close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content layout="column" layout-gt-sm="row"  >
+  
+    <form ng-submit="doLogin()">
+      <div flex-gt-md="45" flex-order="1" class="md-padding md-whiteframe-2dp" layout="column">  
+        <md-input-container>
+          <label>Email</label>
+          <input ng-model="email">
+        </md-input-container>
+
+        <md-input-container>
+          <label>Password</label>
+          <input ng-model="password" type="password">
+        </md-input-container>
+        
+        <md-input-container layout-align="center center">
+          <md-button class="md-raised md-primary">Sign in with Email</md-button>
+        </md-input-container>
+      </div>
+    </form>
+   
+    <div flex-gt-md="55" flex-order="3" layout="column" class="md-padding">
+
+      <md-button class="md-raised md-primary"
+        ng-click="authenticate('facebook')"> Sign in with Facebook </md-button>
+      <md-button class="md-raised md-primary"  
+        ng-click="authenticate('google')">Sign in with Google</md-button>
+      <md-button class="md-raised md-primary"  
+        ng-click="authenticate('live')">Sign in with Windows Live</md-button>
+      <!--
+      <md-button class="md-raised md-primary"  
+        ng-click="authenticate('linkedin')">Sign in with LinkedIn</md-button>
+      <md-button class="md-raised md-primary"  
+        ng-click="authenticate('twitter')">Sign in with Twitter</md-button>
+      <md-button class="md-raised md-primary"  
+        ng-click="authenticate('instagram')">Sign in with Instagram</md-button>
+      <md-button class="md-raised md-primary"  
+        ng-click="authenticate('yahoo')">Sign in with Yahoo</md-button>
+      <md-button class="md-raised md-primary"
+        ng-click="authenticate('twitch')">Sign in with Twitch</md-button> -->
+    </div>
+
+  </md-dialog-content>
+
+</md-dialog>
+

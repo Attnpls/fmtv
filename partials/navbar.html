@@ -1,0 +1,57 @@
+<!-- partials.navbar -->
+<md-toolbar style="{{site.titlebarColor}}">
+
+  <div class="md-toolbar-tools">
+
+    <!-- hide-gt-sm  -->
+    <md-button ng-click="toggleSidenav('left')" class="md-icon-button">
+      <md-icon aria-label="Menu" md-svg-icon="menu"></md-icon>
+    </md-button>
+
+    <img ng-show="site.logo.length" ng-src="{{site.logo}}" class="logo">
+
+    <h1>{{site.title}}</h1>
+
+    <span flex></span>
+
+    {{currentusername()}}
+    <!--
+    <md-button class="md-icon-button" aria-label="Search" ng-click="openSearch()">
+      <md-icon aria-label="Search" md-svg-icon="magnify">
+        <md-tooltip>Open Saved Design</md-tooltip>
+      </md-icon>
+    </md-button> -->
+  
+    <md-button class="md-button" 
+      hide-sm
+      ng-click="toggleFullScreen()"
+      aria-label="Fullscreen">
+      <md-icon md-svg-icon="fullscreenexit" ng-show="isFullScreen"></md-icon> 
+      <md-icon md-svg-icon="fullscreen" ng-hide="isFullScreen"></md-icon>
+      <md-tooltip md-direction="left" ng-show="isFullScreen">Exit Fullscreen</md-tooltip>
+      <md-tooltip md-direction="left" ng-show="!isFullScreen">Fullscreen</md-tooltip>  
+    </md-button>
+
+    <!--
+    <md-button class="md-icon-button" aria-label="Favorite">
+      <md-icon aria-label="Favorite" md-svg-icon="favorite" style="color: greenyellow;">
+        <md-tooltip>Save this</md-tooltip></md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="More">
+      <md-icon aria-label="More" md-svg-icon="more" ></md-icon>
+    </md-button>
+    -->
+    <!--
+    <md-button class="md-button" ng-click="save();" aria-label="Save">
+      <md-icon md-svg-icon="save"></md-icon> Save
+    </md-button>
+    <md-button md-no-ink class="md-button" ng-click="save();" aria-label="Print">
+      <md-icon md-svg-icon="print"></md-icon> Print
+    </md-button>
+    <md-button md-no-ink class="md-button" ng-click="save();" aria-label="Share">
+      <md-icon md-svg-icon="share"></md-icon> Share
+    </md-button> 
+    -->
+     
+  </div>
+</md-toolbar>

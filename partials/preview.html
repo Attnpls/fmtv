@@ -1,0 +1,92 @@
+<md-card >
+
+  <md-card-content >
+    <div class="md-headline" id="previewJobName">
+      <a href="#" editable-text="configuration.meta.job_name">{{ configuration.meta.job_name || "empty" }}</a>
+      <md-tooltip md-direction="bottom">Please click to name this design.</md-tooltip>
+    </div>
+  </md-card-content>
+
+  <!-- Frame Preview Image -->
+  <div ng-include="'partials/preview.image.html'" style="overflow:hidden;"></div>
+
+  <md-card-content layout="row">
+    <div flex="75" >
+      <a ng-click="resetType();" class="setTypeLink">{{configuration.type | capitalize}} </a>
+      <md-tooltip md-direction="top">Cick to change product type.</md-tooltip>
+
+      <span ng-show="configuration.tv.diagscreensize">
+        price as configured 
+        <nobr>for a {{configuration.tv.diagscreensize}}&dash;inch&nbsp;TV</nobr>
+      </span>
+    </div>
+    
+    <div flex="25">
+      <div id="previewPrice" ng-show="configuration.tv.diagscreensize">{{configuration.pricetotal | currency}}</div>
+    </div>
+  </md-card-content>
+
+  <!--
+  <div class="md-actions" layout="row" layout-align="end center">
+    <md-button ng-click="showBottomSheet($event)">Save for Later / Print / Share</md-button> 
+  </div>-->
+
+</md-card>
+
+<!--
+<div layout="row" layout-align="start center" ng-click="goToTab(1);"> 
+  <md-button class="md-fab md-mini" aria-label="Save">
+    <md-icon md-svg-icon="save"></md-icon>
+    <md-tooltip md-direction="down">SAVE</md-tooltip>
+  </md-button>
+   <md-button class="md-fab md-mini" aria-label="Save">
+    <md-icon md-svg-icon="print"></md-icon>
+    <md-tooltip md-direction="down">PRINT</md-tooltip>
+  </md-button> 
+  <md-button class="md-fab md-mini" aria-label="Save">
+    <md-icon md-svg-icon="share"></md-icon>
+    <md-tooltip md-direction="down">SHARE</md-tooltip>
+  </md-button>
+</div> -->
+
+<!---->
+<md-button ng-click="showBottomSheet($event)">Save / Print / Share</md-button> 
+
+<!--
+<div layout="row" layout-align="start center"> 
+    <md-button class="md-icon-button md-primary" ng-click="save();" aria-label="Save">
+      <md-icon md-svg-icon="save"></md-icon>
+      <md-tooltip md-direction="bottom">Save</md-tooltip>
+    </md-button>
+    <md-button md-no-ink class="md-icon-button md-primary" ng-click="save();" aria-label="Print">
+      <md-icon md-svg-icon="print"></md-icon>
+      <md-tooltip md-direction="bottom">Print</md-tooltip> 
+    </md-button>
+    <md-button md-no-ink class="md-icon-button md-primary" ng-click="save();" aria-label="Share">
+      <md-icon md-svg-icon="share"></md-icon>
+      <md-tooltip md-direction="bottom">Share</md-tooltip>
+    </md-button> 
+  </div>
+-->
+<!-- FAB MENU
+    <div  layout="row" layout-align="center center">
+      <md-fab-speed-dial ng-hide="demo.hidden" md-direction="right" class="md-fling">
+        <md-fab-trigger>
+          <md-button aria-label="menu" class="md-fab md-warn">
+            <md-tooltip md-direction="top">Menu</md-tooltip> 
+            <md-icon aria-label="Menu" md-svg-icon="menu" ></md-icon>
+          </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+
+          <div ng-repeat="item in items">
+            <md-button aria-label="{{item.name}}" class="md-fab md-raised md-mini"
+                       ng-click="alert('click')">
+              <md-tooltip md-direction="top">{{item.name}}</md-tooltip>
+              <md-icon md-svg-src="{{item.icon}}"></md-icon>
+            </md-button>
+          </div>
+        </md-fab-actions>
+      </md-fab-speed-dial>
+    </div>
+-->

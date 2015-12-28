@@ -1,0 +1,48 @@
+<div id="previewImage" class="md-card-image" >
+
+	<!-- Wall 	
+	<img class="previewimage" style="z-index:50;" src="http://framemytv.com/images/configurator/preview/wall/Wall00_F.png"/>-->
+	
+	<!-- Ghost -->
+	<img class="previewimage" style="z-index:51;" src="./assets/img/startHere.png"
+		ng-hide="configuration.tv.diagscreensize"> 
+
+	<!-- TV -->	
+	<img class="previewimage" style="z-index:52;"
+	 ng-src="http://framemytv.com/images/configurator/preview/tv/TV{{configuration.tv.speakerlayout}}01F.png"
+	 ng-show="configuration.tv.diagscreensize > 0 && !configuration.previewimage.preview_front_mirror" />
+
+	<!-- Screen Image 
+	<cfif len(configstruct.ScreenImage)>
+		<cfif len(configstruct.preview_front_mirror)>
+			<img class="previewimage" style="z-index:53;" src="http://framemytv.com/images/configurator/preview/mirror/Mirror#session.configurator.speakerlayout#000#attributes.screen#.png"/>
+		<cfelse>
+			<img class="previewimage" style="z-index:53;" src="http://framemytv.com/images/configurator/preview/screenimage/#screen0#attributes.screen#-LY.png#"/>
+		</cfif>
+	</cfif>	-->
+
+	<!-- Mirror -->
+	<img class="previewimage" style="z-index:54;" id="tvmirror"
+	 ng-src="http://framemytv.com/images/configurator/preview/mirror/{{configuration.previewimage.preview_front_mirror}}"
+	 ng-show="configuration.previewimage.preview_front_mirror" />
+			
+	<!-- Acousimat 
+	<img class="previewimage" style="z-index:55;"
+	 ng-src="http://framemytv.com/images/configurator/preview/acoustimat/{{}}" ng-show="" />-->
+
+	<!-- Liner 	preview_front_liner -->
+	<img class="previewimage" style="z-index:56;"
+	 ng-src="http://framemytv.com/images/configurator/preview/liner/{{configuration.liner.previewimage}}"
+	 ng-show="(configuration.frame.style.styleid ||configuration.art.artid) && configuration.liner.previewimage" />
+
+	<!-- Art -->	
+	<img class="previewimage" style="z-index:57;"
+	 ng-src="http://framemytv.com/images/configurator/preview/art/{{configuration.art.artid}}-{{configuration.tv.speakerlayout}}.png"
+	 ng-show="configuration.art.artid" />
+			
+	<!-- Frame -->
+	<img class="previewimage" style="z-index:58;" id="tvframe"
+	 ng-src="http://framemytv.com/images/configurator/preview/frame/{{configuration.previewimage.preview_front_frame}}"
+	 ng-show="configuration.previewimage.preview_front_frame" />
+			
+</div>

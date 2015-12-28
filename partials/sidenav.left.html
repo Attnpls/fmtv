@@ -1,0 +1,55 @@
+
+
+<!-- partials.sidenav_left -->
+<!-- md-is-locked-open="$mdMedia('gt-sm')" -->
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+
+  <md-toolbar class="md-theme-indigo" ng-controller="LeftCtrl as ctrl">
+    <div class="md-toolbar-tools">
+      <h1 flex>Main Menu</h1>
+      <md-button class="md-icon-button" aria-label="Close" ng-click="ctrl.close()">
+        <md-icon md-svg-icon="close"></md-icon>
+      </md-button>        
+    </div>
+  </md-toolbar>
+ 
+  <md-content layout-padding ng-controller="LeftCtrl as ctrl">
+
+    <md-button ng-show="!isAuthenticated()" ng-click="loginDialog();">Log In</md-button>
+    
+    <div ng-show="isAuthenticated()" 
+      layout-margin layout="row" layout-align="start center" class="username" >
+      <div flex>{{currentusername()}}</div>
+      <md-button class="md-button" ng-click="doLogout()"aria-label="logout">
+        <md-icon md-svg-icon="logout"></md-icon> 
+        <md-tooltip md-direction="bottom">Log out</md-tooltip> 
+      </md-button>
+    </div>
+
+    <md-button ng-click="resetType();">Change Current Design's Type</md-button>
+    <md-button ng-click="newConfiguration();">Start a New Design</md-button>
+    <md-button ng-click="openConfigurationsDialog();">Open a Saved Design</md-button>
+
+    <!-- -->
+    <div>
+      <br><br>  
+      <md-divider ></md-divider>
+      <h5>Current User</h5>   
+      <pre>{{currentuser() | json}}</pre> 
+      <div>
+        isAuthenticated: {{isAuthenticated()}}<br>
+        isAdmin: {{isAdmin()}}<br>
+        isAccountAdmin: {{isAccountAdmin()}}<br>
+        isAccountAssociate: {{isAccountAssociate()}}<br>
+      <div>
+
+      <h5>Site</h5>   
+      <pre>{{site | json}}</pre> 
+
+      <h5>Configuration</h5>   
+      <pre>{{configuration | json}}</pre> 
+    </div>
+
+  </md-content>
+
+</md-sidenav>

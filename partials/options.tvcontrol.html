@@ -1,0 +1,36 @@
+<md-content>
+
+  <md-list>
+
+    <md-list-item class="md-3-line tvControlItem" ng-repeat="item in tvControls"
+      ng-click="selecttvControl(item)" 
+      ng-class="{'selected': configuration.tvcontrol.tvcontrolid == item.tvcontrolid}" >
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.tvcontrol.tvcontrolid == item.tvcontrolid">
+        <md-icon md-svg-icon="check"/>
+      </md-button>            
+      <img ng-src="{{item.thumburl}}" alt="{{item.name}}">
+      <div class="md-list-item-text">
+        <h3>{{item.name}}</h3>
+        <!-- <p>{{item.caption}}</p> -->
+        <div class="price">
+          <span ng-hide="configuration.tv.diagscreensize" 
+            class="alert link"
+            ng-click="goTo('design','tv');"
+            layout="row" layout-align="start middle">
+            <md-icon md-svg-icon="alert"></md-icon> <span flex>Please Set TV Size for Price</span>
+          </span>
+          <span ng-show="configuration.tv.diagscreensize">
+            Price: {{calculateTvControlPrice(item) | currency}}
+          </span>       
+        </div>
+      </div>
+       
+      <md-divider ></md-divider>
+
+    </md-list-item>
+  
+  </md-list>
+
+</md-content>
+  

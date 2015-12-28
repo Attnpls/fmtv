@@ -1,0 +1,94 @@
+
+<v-accordion class="vAccordion--default" control="accOptions"  >
+
+  <!-- <div class="accordionSeparator">Options</div>-->
+
+  <p>Our design consultants are available to help you review these installation and control options and select the best options for your frame.</p>
+
+  <!-- TVControl -->
+  <v-pane>
+    <v-pane-header id="edit_tvcontrol" ng-click="accOptions.expand(0)">
+      TV Control<span ng-show="configuration.tvcontrol.tvcontrolid >= 0">: {{configuration.tvcontrol.tvcontroltext}}</span>
+    </v-pane-header>
+    <v-pane-content>
+      <md-button aria-label="TV Control Help" ng-click="help('TV Control','configurator-options-tvcontrol-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>    
+      <div ng-include="'partials/options.tvcontrol.html'"></div>
+    </v-pane-content>
+  </v-pane>
+
+  <!-- ArtControl -->
+  <v-pane ng-show="configuration.type.indexOf('art') > 0">
+    <v-pane-header id="edit_artcontrol" ng-click="accOptions.expand(1)">
+      Art Control<span ng-show="configuration.artcontrol.artcontrolid">: {{configuration.artcontrol.artcontroltext}}</span>
+    </v-pane-header>
+    <v-pane-content>
+      <md-button aria-label="Art Control Help" ng-click="help('Art Control','configurator-options-artcontrol-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>    
+      <div ng-include="'partials/options.artcontrol.html'"></div>
+    </v-pane-content>
+  </v-pane>
+
+  <!-- SideDepth -->
+  <v-pane>
+    <v-pane-header  id="edit_sidedepth" ng-click="accOptions.expand(2)">
+      Side Depth<span ng-show="configuration.sidedepth.sidedepthid">: {{configuration.sidedepth.sidedepthtext}}</span>
+    </v-pane-header>
+    <v-pane-content>
+      <md-button aria-label="Side Depth Help" ng-click="help('Side Depth','configurator-options-sidedepth-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>    
+      <div ng-include="'partials/options.sidedepth.html'"></div>
+    </v-pane-content>
+  </v-pane>
+
+  <!-- Speakers -->            
+  <v-pane ng-show="configuration.type.indexOf('art') > 0">
+    <v-pane-header id="edit_speakers" ng-click="accOptions.expand(4)">
+      Speaker Bar<span ng-show="configuration.speakerbar.hasspeakerbar == 1">: {{configuration.speakerbar.makemodel}}</span><span ng-show="configuration.speakerbar.hasspeakerbar == 0">: None</span>
+    </v-pane-header>
+    <v-pane-content>
+      <md-button aria-label="Speaker Bar Help" ng-click="help('Speaker Bar','configurator-options-speakers-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>    
+      <div ng-include="'partials/options.speakers.html'"></div>
+    </v-pane-content>
+  </v-pane>
+
+  <!-- Installation -->
+  <v-pane>
+    <v-pane-header id="edit_installation" ng-click="accOptions.expand(3)">
+      Installation Method<span ng-show="configuration.installmethod.installmethodid">: 
+        <span ng-show="configuration.mounted.type=='R'">Recess </span> 
+        <span ng-show="configuration.mounted.type=='S'">Surface </span> Mounted with 
+        {{configuration.installmethod.installmethodtext}}</span>
+    </v-pane-header>
+    <v-pane-content>
+      <md-button aria-label="Installation Help" ng-click="help('Installation','configurator-options-install-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>    
+      <div ng-include="'partials/options.installation.html'"></div>
+    </v-pane-content>
+  </v-pane>
+  
+</v-accordion>
+
+<!-- https://github.com/LukaszWatroba/v-accordion 
+<button ng-click="accOptions.expandAll()">Expand all</button> 
+<button ng-click="accOptions.collapseAll()" id="collapseAll">Collapse all</button>
+-->
+
+<div layout="row" layout-align="end center"> 
+  <!-- View Summary -->
+  <md-button class="md-fab md-mini md-primary link" aria-label="Summary" ng-click="accOptions.collapseAll();goTo('summary');">
+    <md-icon md-svg-icon="arrowr"></md-icon>
+    <md-tooltip md-direction="left">Summary</md-tooltip>
+  </md-button>
+</div>

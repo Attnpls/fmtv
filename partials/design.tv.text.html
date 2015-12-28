@@ -1,0 +1,23 @@
+
+<!-- entered directly -->
+<span ng-show="!configuration.tv.id && !configuration.tv.height && configuration.tv.diagscreensize">
+	{{configuration.tv.diagscreensize}}-in. diag. screen size.
+</span>
+
+<!-- by height & width -->
+<span ng-show="configuration.tv.height > 1 && configuration.tv.width > 1">
+	{{configuration.tv.width}}-in. wide by {{configuration.tv.height}} in. high. 
+</span>
+
+<!-- by model number -->
+<span ng-show="configuration.tv.id">
+	{{configuration.tv.makemodel}} {{configuration.tv.diagscreensize}}-in. diag
+</span>
+
+<!-- manual entry of model -->
+<span ng-show="!configuration.tv.id && configuration.tv.makemodel">
+	Model: {{configuration.tv.makemodel}}
+</span>
+
+
+

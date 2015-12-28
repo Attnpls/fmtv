@@ -1,0 +1,72 @@
+<!-- Sidenav Right Detail -->
+<md-sidenav  ui-view layout-fill  class="md-sidenav-right md-whiteframe-z3" md-component-id="frameDetailPanel">
+
+  <md-toolbar  ng-click="toggleSidenav('frameDetailPanel')" >
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" aria-label="Back">
+        <md-icon md-svg-icon="cheveronL"></md-icon>
+      </md-button>
+      <h2>
+        {{panelTitle}}: {{item.caption}}
+      </h2>
+    </div>
+  </md-toolbar> 
+
+  <md-content layout-padding>
+
+    <img lazy-src="{{item.url}}" class="img-thumbnail" alt="{{item.caption}}"> 
+
+    <h3>{{item.caption}}</h3>
+    <p>Width: {{item.facewidth/100}} in.</p>
+    <div class="price">
+      <span ng-hide="configuration.tv.diagscreensize" 
+        class="alert link"
+        ng-click="goTo('design','tv');"
+        layout="row" layout-align="start middle">
+        <md-icon md-svg-icon="alert"></md-icon> <span flex>Please Set TV Size for Price</span>
+      </span>
+      <span ng-show="configuration.tv.diagscreensize">
+        Price: {{calculateStylePrice(item.stylefactor, item.stylebase) | currency }} 
+        for a {{showTvDiagScreenSize()}} inch TV 
+      </span> 
+    </div>
+
+    <div>{{item.meta.job_name}}</div>     
+                  
+    <br>
+
+    <md-button  ng-click="selectFrameStyle(item)" class="md-raised md-primary">
+      Select This Frame Style
+    </md-button>
+
+    <!-- 
+    <div class="sampleLinks">
+      Order Samples<br>         
+      <button type="button" class="btn btn-default btn-xs" >Color Chip Sample $2</button>     
+      <button type="button" class="btn btn-default btn-xs" >Corner Sample $15</button>            
+    </div>
+            
+    <div class="imageContainer">
+      {{additionalimage1}}
+      {{additionalimage2}}
+      {{additionalimage3}}
+      <img src="http://framemytv.com/images/configurator/options/styles/lightboxdetail/{{additionalimage1}}"  /> 
+    </div> 
+
+    <div class="actionLinks">
+      <span ng-click="$parent.$parent.itemFavorite( item )">
+        <span class="glyphicon glyphicon-heart"></span> Save to My Favorites
+      </span>
+      &nbsp;&nbsp;
+      <span ng-click="$parent.$parent.itemPDF( item )">
+        <span class="glyphicon glyphicon-download"></span> PDF
+      </span>
+    </div>     
+  
+    {{item | json}}
+    --> 
+
+  </md-content>
+  
+</md-sidenav>
+

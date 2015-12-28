@@ -1,0 +1,94 @@
+<form novalidate name="saveConfiguration" id="configSaveFrm">
+
+
+	<div layout="column" layout-padding>
+
+		<!--
+		<div layout="row" layout-align="start center" class="subtitle">
+			<strong>Save this Design:</strong>
+		</div>
+		-->
+
+		<div layout="row" layout-sm="column" layout-align="start center" class="titleRow">
+			 
+			<div layout="row" layout-align="start center" >
+				<div class="titleText">Save &nbsp;</div>
+			</div> 
+			
+			<md-input-container ng-class="hasError(tvSizeFrm.makemodel)">
+				<label for="metajob">Design Name</label>
+				<input name="metajob" type="text" ng-model="configuration.meta.job_name">
+			</md-input-container>
+
+			<div layout="row" layout-align="start center" >
+				<div class="titleText"> for &nbsp;</div>
+			</div> 
+
+			<md-input-container ng-class="hasError(tvSizeFrm.makemodel)">
+				<label for="metaname">E-mail Address</label>
+				<input name="metaname" type="text" ng-model="configuration.meta.name">
+			</md-input-container>
+
+		</div>
+
+		<div layout="row" layout-align="start center">
+			<!--
+			<md-checkbox 
+				ng-model="configuration.meta.status" 
+				ng-true-value="contact" 
+				ng-false-value=""
+				aria-label="Please contact me">
+			  Please contact me.
+			</md-checkbox>
+		-->
+		</div>
+
+
+		<md-button class="md-button md-primary" ng-click="save();" aria-label="Save Design">
+	      <md-icon md-svg-icon="check"></md-icon> Save Design
+	      <md-tooltip md-direction="down">Save Design</md-tooltip>
+	    </md-button>
+
+		<!-- Round button 
+	    <md-button class="md-fab md-mini md-primary" ng-click="save();" aria-label="Save Design">
+	      <md-icon md-svg-icon="check"></md-icon>
+	      <md-tooltip md-direction="down">Save Design</md-tooltip>
+	    </md-button>
+		-->
+	</div>
+
+
+	<div layout="row" layout-align="start center">
+		You can find this design later buy entering your email address in the search bar above or by pasting the link below into your web browser:
+	</div>
+	<div layout="row" layout-align="start center" style="margin-top:10px;">
+		Direct link: &nbsp;
+		<input value="app/?id={{configuration.meta.configuration_id}}" 
+		style="border:1px solid whitesmoke; width:80%;">
+	</div>
+
+</form>
+
+
+
+
+<!--
+<div ng-show="!configuration.canorder"> 
+	<br><br>
+	<div class="alert md-title" layout="row">
+		<md-icon md-svg-icon="alert" style="width:48px; height:48px; padding-right:20px;"></md-icon> 
+		<div flex >OOPS! This design is not ready to order yet.<br>Please review the Design Summary for more information.</div>
+	</div>
+	<br><br>
+	<div class="md-actions">
+    	<md-button class="md-fab md-mini md-primary link" aria-label="Summary" ng-click="goTo('summary');">
+      		<md-icon md-svg-icon="arrowl"></md-icon> 
+      		<md-tooltip md-direction="right">Summary</md-tooltip>
+    	</md-button> 
+ 	 </div>
+</div>
+-->
+
+<div ng-show="configuration.canorder">
+	<md-button class="md-raised md-primary"><md-icon md-svg-icon="cart"></md-icon> Add to Cart</md-button>
+</div>

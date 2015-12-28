@@ -1,0 +1,47 @@
+<!-- Sidenav Right List -->
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="frameListPanel">
+
+  <!-- Nav Bar -->
+	<md-toolbar class="md-theme-light" ng-click="toggleSidenav('frameListPanel')" >
+	  <div class="md-toolbar-tools">
+	    <h2 flex>
+	      <span>{{panelTitle}}</span>
+	    </h2>
+      <md-button class="md-icon-button" aria-label="Close">
+        <md-icon md-svg-icon="close"></md-icon>
+      </md-button>        
+	  </div>
+	</md-toolbar>
+
+  <!-- Content ng-controller="RightCtrl" -->
+  <md-content layout-padding>
+
+    <md-grid-list
+      md-cols="5"
+      md-cols-md="4"
+      md-cols-sm="3"
+      md-row-height="1:1" 
+      md-gutter="10px"
+      class="frameRow">
+
+      <md-grid-tile ng-repeat="item in standardFrames = (frameStyles | filter: { category: filterBy })"
+        ng-click="openFramesDetail(panelTitle,item)" class="frameTileSm"
+        md-colspan="1" md-rowspan="1" >
+        <img lazy-src="{{item.thumburl}}" alt="{{item.caption}}">
+        <md-tooltip md-direction="bottom">{{item.caption}}</md-tooltip>
+        <md-button class="md-fab md-mini itemselected" aria-label="selected" 
+        ng-show="item.styleid == configuration.frame.style.styleid">
+          <md-icon md-svg-icon="check"/>
+        </md-button>        
+      </md-grid-tile>
+
+    </md-grid-list>
+
+    <md-button ng-click="toggleSidenav('frameListPanel')" class="md-primary" aria-label="Close">
+      Close Panel
+    </md-button>
+
+  </md-content>
+
+</md-sidenav>
+

@@ -1,0 +1,118 @@
+
+<div layout-padding>
+
+  <div class="panelTitle" layout="column" layout-gt-sm="row" layout-align-gt-sm="start end">
+    <span class="padRight">How will the TV be attached to the wall?</span> 
+  </div>
+
+  <section layout="row" layout-align="center center" ng-init="tvSizeBy=1" >
+    <md-button class="groupX left" ng-click="setMounted('S')" 
+      ng-class="{active: configuration.mounted.type=='S'}">
+      Surface Mounted
+    </md-button>
+    <md-button class="groupX right" ng-click="setMounted('R')" 
+      ng-class="{active: configuration.mounted.type=='R'}">
+      Recess Mounted
+    </md-button>
+  </section>
+              
+  <div class="panelTitle" ng-show="configuration.mounted.type=='R'">
+    <md-checkbox ng-model="configuration.mounted.recess" aria-label="Existing Recess">
+      The recess already exists.
+    </md-checkbox>
+  </div>
+
+  <form novalidate name="recessSizeFrm" id="recessSizeFrm" 
+  ng-show="configuration.mounted.type=='R' && configuration.mounted.recess==true">
+
+    <div layout="row" layout-sm="column"  layout-align="center center" class="titleRow">
+
+      <div layout="row" layout-align="center center" >
+        <!-- <img ng-src="assets/img/tvdimensions-512.png"></img> -->   
+        <div class="titleText">Recess dimensions:</div>
+      </div>
+
+      <div layout="row" layout-align="center center">
+
+          <md-input-container ng-class="hasError(recessSizeFrm.recessheight)">
+          <label for="recessheight">Height</label>
+          <input name="recessheight" ng-model="configuration.mounted.recessheight" 
+          size="4" min="10" max="150" ng-pattern="/^[0-9]{1,3}$/"
+          ng-blur="calculatediagscreensize()">
+          </md-input-container>
+
+          <div>inches&nbsp;by </div>
+
+          <md-input-container ng-class="hasError(recessSizeFrm.recesswidth)">
+          <label for="recesswidth">Width</label>
+          <input name="recesswidth" ng-model="configuration.mounted.recesswidth" 
+          size="4" min="10" max="150" ng-pattern="/^[0-9]{1,3}$/"
+          ng-blur="calculatediagscreensize()">
+          </md-input-container>
+        <div>inches.</div>    
+      </div>
+
+      <div class="field-validation-error" ng-show="recessSizeFrm.recessheight.$invalid" layout="row" layout-align="center center">Height must be a number between 10 and 150.</div>
+      <div class="field-validation-error" ng-show="recessSizeFrm.recesswidth.$invalid" layout="row" layout-align="end center">Width must be a number between 10 and 150.</div>    
+
+    </div>
+     <md-divider ></md-divider>
+  </form>  
+
+ 
+
+  <md-list class="installListSurface" ng-show="configuration.mounted.type">
+    <md-list-item class="md-3-line tvControlItem"  
+      ng-repeat="item in surfaceItems = (installMethods | filter: { mounting:'S'})"
+      ng-click="selectInstallMethod(item)"
+      ng-class="{'selected': configuration.installmethod.installmethodid == item.installmethodid}"
+      >
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.installmethod.installmethodid == item.installmethodid">
+        <md-icon md-svg-icon="check"/>
+      </md-button>        
+      <img ng-src="{{item.thumburl}}" alt="{{item.name}}"> 
+      <div class="md-list-item-text">    
+        <h3>{{item.name}}</h3>
+        <div class="price">
+          <span ng-hide="configuration.tv.diagscreensize" 
+            class="alert link"
+            ng-click="goTo('design','tv');"
+            layout="row" layout-align="start middle">
+            <md-icon md-svg-icon="alert"></md-icon> <span flex>Please Set TV Size for Price</span>
+          </span>
+          <span ng-show="configuration.tv.diagscreensize">
+            Price: {{calculateInstallMethodPrice(item) | currency}}
+          </span>       
+        </div>
+      </div>
+      <md-divider ></md-divider>
+    </md-list-item>
+
+    <!-- Show additional Recess options -->
+    <md-list-item class="md-3-line tvControlItem" 
+      ng-show="configuration.mounted.type=='R'"
+      ng-repeat="item in surfaceItems = (installMethods | filter: { mounting:'R'})"
+      ng-click="selectInstallMethod(item)"
+      ng-class="{'selected': configuration.installmethod.installmethodid == item.installmethodid}"
+      >
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.installmethod.installmethodid == item.installmethodid">
+        <md-icon md-svg-icon="check"/>
+      </md-button>        
+      <img ng-src="{{item.thumburl}}" alt="{{item.name}}"> 
+      <div class="md-list-item-text">    
+        <h3>{{item.name}}</h3>
+        <div>Price: {{calculateInstallMethodPrice(item) | currency}}</div>
+      </div>
+      <md-divider ></md-divider>
+    </md-list-item>
+
+  </md-list>
+    
+</div>
+
+
+<!--
+{{installMethods | json}} -->
+

@@ -1,0 +1,132 @@
+<md-content layout-padding>
+        
+  <p class="panelTitle">Standard Frames</p>  
+  <md-grid-list
+    md-cols="6"
+    md-row-height="1:1" 
+    md-gutter="10px"
+    class="frameRow">
+
+    <md-grid-tile ng-repeat="item in standardFrames = (frameStyles | filter: { category: 'S' }) | limitTo:5"
+      ng-click="openFramesDetail('Standard Frames',item)" class="frameTileSm"
+      md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <img ng-src="{{item.thumburl}}" alt="{{item.caption}}">
+      <md-tooltip md-direction="bottom">{{item.caption}}</md-tooltip>
+      <md-button class="md-fab md-mini itemselected" aria-label="selected" 
+      ng-show="item.styleid == configuration.frame.style.styleid">
+        <md-icon md-svg-icon="check"/>
+      </md-button>
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="openFramesList('Standard Frames','S')" 
+     md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <md-button class="md-fab md-primary moreFrames" aria-label="More Frames">
+        +{{standardFrames.length-5}}
+        <md-tooltip md-direction="top">More frames</md-tooltip>
+      </md-button> 
+    </md-grid-tile>
+  </md-grid-list>
+
+
+  <p class="panelTitle">Metro Frames</p>      
+  <md-grid-list
+    md-cols="6"
+    md-row-height="1:1" 
+    md-gutter="10px"
+    class="frameRow">
+    
+    <md-grid-tile ng-repeat="item in metroFrames = (frameStyles | filter: { category: 'M' }) | limitTo:5"
+      ng-click="openFramesDetail('Metro Frames',item)" class="frameTileSm"
+      md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <img ng-src="{{item.thumburl}}" alt="{{item.caption}}">
+      <md-tooltip md-direction="bottom">{{item.caption}}</md-tooltip>
+      <md-button class="md-fab md-mini itemselected" aria-label="selected" 
+      ng-show="item.styleid == configuration.frame.style.styleid">
+        <md-icon md-svg-icon="check"/>
+      </md-button>        
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="openFramesList('Metro Frames','M')" 
+    md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <md-button class="md-fab md-primary moreFrames" aria-label="More Frames">
+        +{{metroFrames.length-5}}
+        <md-tooltip md-direction="top">More frames</md-tooltip>
+      </md-button> 
+    </md-grid-tile>
+  </md-grid-list>
+
+
+  <p class="panelTitle">Premium Hardwood Frames</p>      
+  <md-grid-list
+    md-cols="6"
+    md-row-height="1:1" 
+    md-gutter="10px"
+    class="frameRow">
+
+    <md-grid-tile ng-repeat="item in premiumFrames = (frameStyles | filter: { category: 'H' }) | limitTo:5"
+      ng-click="openFramesDetail('Premium Hardwood Frames',item)" class="frameTileSm hardwood"
+      md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <img ng-src="{{item.thumburl}}" alt="{{item.caption}}">
+      <md-tooltip md-direction="bottom">{{item.caption}}</md-tooltip>
+      <md-button class="md-fab md-mini itemselected" aria-label="selected" 
+      ng-show="item.styleid == configuration.frame.style.styleid">
+        <md-icon md-svg-icon="check"/>
+      </md-button>      
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="openFramesList('Premium Hardwood Frames','H')"  class="moreFrames"
+    md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <md-button class="md-fab md-primary moreFrames" aria-label="More Frames">
+        +{{premiumFrames.length-5}}
+        <md-tooltip md-direction="bottom">More frames</md-tooltip>
+      </md-button> 
+    </md-grid-tile>
+  </md-grid-list>
+
+
+  <p class="panelTitle">Artisan Frames</p>      
+  <md-grid-list
+    md-cols="6"
+    md-row-height="1:1" 
+    md-gutter="10px"
+    class="frameRow">
+
+    <md-grid-tile ng-repeat="item in artisanFrames = (frameStyles | filter: { category: 'A' }) | limitTo:5"
+      ng-click="openFramesDetail('Artisan Frames',item)" class="frameTileSm artisan" 
+      md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <img ng-src="{{item.thumburl}}" alt="{{item.caption}}">
+      <md-tooltip md-direction="bottom">{{item.caption}}</md-tooltip>
+      <md-button class="md-fab md-mini itemselected" aria-label="selected" 
+      ng-show="item.styleid == configuration.frame.style.styleid">
+        <md-icon md-svg-icon="check"/>
+      </md-button>      
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="openFramesList('Artisan Frames','A')"  class="moreFrames" 
+    md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <md-button class="md-fab md-primary moreFrames" aria-label="More Frames">
+        +{{artisanFrames.length-5}}
+        <md-tooltip md-direction="bottom">More frames</md-tooltip>
+      </md-button>
+    </md-grid-tile>
+  </md-grid-list>
+
+  <div ng-click="toggleSidenav('right')">
+      <p class="panelTitle">Wilner Collection</p> 
+
+      <div layout="row">
+
+        <p flex>For collectors of fine art we are proud to feature this exquisite collection of hand carved 22k Gold finished corner frames.</p>
+
+        <div layout="row" layout-align="end start" style="margin:10px 0 0 10px">
+          <a href="http://framemytv.com/c164/Eli-Wilner-TV-Mirror-Frames---Framed-TV-Mirror-|-Frame-My-TV.htm" target="_blank">
+            <md-button class="md-raised md-primary">View Collection</md-button>
+          </a>
+        </div>
+
+      </div>
+      
+  </div>
+
+</md-content>
+

@@ -1,0 +1,87 @@
+
+<v-accordion class="vAccordion--default" control="accordion"  >
+
+  <!-- TV Size  / expanded="true"-->
+  <v-pane >
+    <v-pane-header id="edit_tv" ng-click="accordion.expand(0)">
+      TV Size<span ng-show="configuration.tv.diagscreensize > 0">: {{configuration.tv.diagscreensize}}-inch diagonal</span>
+    </v-pane-header>
+    <v-pane-content>
+      <md-button aria-label="TV Size Help" ng-click="help('TV Size','configurator-tv-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>
+      <div ng-include="'partials/design.tv.html'"></div>
+    </v-pane-content>
+  </v-pane>
+
+  <!-- Frame Style -->
+  <v-pane ng-hide="configuration.type.indexOf('frameless') == 0 ">
+    <v-pane-header id="edit_frame" ng-click="accordion.expand(1)">
+      Frame Style<span ng-show="configuration.frame.style.styleid">: {{configuration.frame.style.caption}}</span>
+    </v-pane-header>
+    <v-pane-content>
+      <md-button aria-label="Frames Help" ng-click="help('Frame Styles','configurator-frame-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>    
+      <div ng-include="'partials/design.frame.html'"></div>
+    </v-pane-content>
+  </v-pane>
+
+  <!-- Liner -->
+  <v-pane ng-hide="configuration.type.indexOf('frameless') == 0 || configuration.type == 'metro mirror'">
+    <v-pane-header  id="edit_liner" ng-click="accordion.expand(4)">
+      Liner Color<span ng-show="configuration.liner.linerid">: {{configuration.liner.linertext}}</span>
+    </v-pane-header>
+    <v-pane-content>
+       <md-button aria-label="Liner Help" ng-click="help('Frame Liner','configurator-options-liner-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>   
+      <div ng-include="'partials/design.liner.html'"></div>
+    </v-pane-content>
+  </v-pane>
+
+  <!-- Mirror -->
+  <v-pane ng-show="configuration.type.indexOf('mirror') > 0">
+    <v-pane-header id="edit_mirror" ng-click="accordion.expand(2)">
+      Mirror<span ng-show="configuration.mirror.mirrorid">: {{configuration.mirror.name}}</span>
+    </v-pane-header>
+    <v-pane-content>
+      <md-button aria-label="Mirror Help" ng-click="help('Mirrors','configurator-mirror-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>    
+      <div ng-include="'partials/design.mirror.html'"></div>
+    </v-pane-content>
+  </v-pane>
+
+  <!-- Artwork -->
+  <v-pane ng-show="configuration.type.indexOf('art') > 0">
+    <v-pane-header id="edit_art" ng-click="accordion.expand(3)">
+      Artwork<span ng-show="configuration.art.artid">: {{configuration.art.name}}</span>
+    </v-pane-header>
+    <v-pane-content>
+      <md-button aria-label="Art Help" ng-click="help('Artwork','configurator-art-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>    
+      <div ng-include="'partials/design.art.html'"></div>
+    </v-pane-content>
+  </v-pane>
+
+</v-accordion>
+
+<!-- https://github.com/LukaszWatroba/v-accordion 
+<button ng-click="accordion.expandAll()">Expand all</button> 
+<button ng-click="accordion.collapseAll()" id="collapseAll">Collapse all</button>
+-->
+
+<div layout="row" layout-align="end center"> 
+  <!-- View Options -->
+  <md-button class="md-fab md-mini md-primary link" aria-label="Options" ng-click="accordion.collapseAll();goTo('options');">
+    <md-icon md-svg-icon="arrowr"></md-icon>
+    <md-tooltip md-direction="left">Options</md-tooltip>
+  </md-button>
+</div>

@@ -1,0 +1,108 @@
+<md-content layout-padding>
+        
+  <p class="panelTitle">Standard Art</p>      
+  <md-grid-list
+    md-cols="6"
+    md-row-height="1:1" 
+    md-gutter="10px"
+    class="frameRow">
+
+    <md-grid-tile ng-repeat="item in art.S | limitTo:5"
+      ng-click="openArtDetail('Standard Art',item)" class="artTileSm"
+      md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2"
+      ng-class="{'selected': configuration.art.artid == item.headline}"
+      >
+      <img ng-src="{{item.thumburl}}" alt="{{item.name}}">
+      <md-tooltip md-direction="top">{{item.name}}</md-tooltip>
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.art.artid == item.headline">
+        <md-icon md-svg-icon="check"/>
+      </md-button>      
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="openArtList('Standard Art','S')" 
+    md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <md-button class="md-fab md-primary moreFramesArt" aria-label="More Art">
+        +{{(art.all | filter: { category: 'S' }).length-5}}
+        <md-tooltip md-direction="top">more...</md-tooltip>
+      </md-button> 
+    </md-grid-tile>
+  </md-grid-list>
+
+
+  <p class="panelTitle">Exclusive Art</p>      
+  <md-grid-list
+    md-cols="6"
+    md-row-height="1:1" 
+    md-gutter="10px"
+    class="frameRow">
+
+    <md-grid-tile ng-repeat="item in art.E | limitTo:5"
+      ng-click="openArtDetail('Exclusive Art',item)" class="artTileSm"
+      md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <img ng-src="{{item.thumburl}}" alt="{{item.name}}">
+      <md-tooltip md-direction="top">{{item.name}}</md-tooltip>
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.art.artid == item.headline">
+        <md-icon md-svg-icon="check"/>
+      </md-button>            
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="openArtList('Exclusive Art','E')" 
+    md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <md-button class="md-fab md-primary moreFramesArt" aria-label="More Art">
+        +{{(art.all | filter: { category: 'E' }).length-5}}
+        <md-tooltip md-direction="top">more...</md-tooltip>
+      </md-button> 
+    </md-grid-tile>
+  </md-grid-list>
+
+
+  <p class="panelTitle">Thomas Kinkade</p>      
+  <md-grid-list
+    md-cols="6"
+    md-row-height="1:1" 
+    md-gutter="10px"
+    class="frameRow">
+
+    <md-grid-tile ng-repeat="item in art.F | limitTo:5"
+      ng-click="openArtDetail('Thomas Kinkade Art',item)" class="artTileSm"
+      md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <img ng-src="{{item.thumburl}}" alt="{{item.name}}">
+      <md-tooltip md-direction="top">{{item.name}}</md-tooltip>
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.art.artid == item.headline">
+        <md-icon md-svg-icon="check"/>
+      </md-button>            
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="openArtList('Thomas Kinkade Art','F')" 
+    md-colspan="1" md-rowspan="1" md-colspan-sm="2" md-rowspan-sm="2">
+      <md-button class="md-fab md-primary moreFramesArt" aria-label="More Art">
+        +{{(art.all | filter: { category: 'F' }).length-5}}
+        <md-tooltip md-direction="top">more...</md-tooltip>
+      </md-button> 
+    </md-grid-tile>
+  </md-grid-list>
+
+
+  <md-list class="artList">
+
+    <md-list-item class="md-3-line" 
+      ng-click="sidenavPage('Custom Artwork',configuratorPages['configurator-art-custom'])"
+      ng-class="{'selected': configuration.art.artid == 'Custom'}">
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.art.artid == 'Custom'">
+        <md-icon md-svg-icon="check"/>
+      </md-button>      
+      <img src="assets/img/customArt_250.jpg">
+      <div class="md-list-item-text">
+        <h3>Custom Artwork</h3>
+        <p>Frame your own art! We can print beautiful copies of your favorite artwork.</p>
+      </div>
+    </md-list-item>
+  
+  </md-list>  
+
+</md-content>
+

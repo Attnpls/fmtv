@@ -1,0 +1,111 @@
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+
+		<form name="accountFrm" ng-submit="doUpdateAccount(user)" novalidate class="form-horizontal">	
+
+			<fieldset>
+				 	
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="username">User Name:</label>
+					<div class="col-md-4">
+				    	<input id="username" name="username" ng-model="user.user_ID" type="text" disabled class="form-control">
+					</div>
+					<span class="col-md-4 help-block">User name is not editable.</span>	
+				</div>	
+									
+				<div class="form-group" ng-class="{'has-error':accountFrm.first_name.$dirty && accountFrm.first_name.$invalid || accountFrm.last_name.$dirty && accountFrm.last_name.$invalid}">
+				
+				  <label class="col-md-4 control-label"><span class="required">*</span> Name:</label>
+				  <div class="row col-md-8">
+				 	<div class="col-sm-3" ng-class="hasError(accountFrm.first_name)">
+				  		<label style="text-align:left">
+							<input name="first_name" ng-model="user.first_name" type="text" required  ng-maxlength="35" class="form-control" >
+							<span class="required">*</span> First
+							<span class="field-validation-error" ng-show="showError(accountFrm.first_name, 'required')">Required.</span>	
+						</label>
+					</div>
+					<div class="col-sm-3">
+				  		<label class="no-error">
+						<input name="middle_name" ng-model="user.middle_name" type="text" placeholder="optional"  ng-maxlength="35" class="form-control">
+						Middle</label>
+					</div>
+					<div class="col-sm-4" ng-class="hasError(accountFrm.last_name)">
+				  		<label>
+						<input name="last_name" ng-model="user.last_name" type="text" required  ng-maxlength="35" class="form-control" >
+							<span class="required">*</span> Last
+							<span class="field-validation-error" ng-show="showError(accountFrm.last_name, 'required')">Required.</span>	
+						</label>
+					</div>
+					<div class="col-sm-2">
+						<label class="no-error">
+						<select name="suffix" ng-model="user.suffix"  ng-options="S.RV_LOW_VALUE as S.RV_LOW_VALUE for S in suffixArray" class="form-control">
+							<option value=""></option>
+						</select>
+						Suffix</label>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="form-group" ng-class="hasError(accountFrm.date_of_birth)">
+				  <label class="col-md-4 control-label" for="date_of_birth"><span class="required">*</span> Date of Birth:</label>
+				  <div class="col-md-3">
+				    <input id="date_of_birth" name="date_of_birth" ng-model="user.date_of_birth"
+						 type="text" placeholder="mm/dd/yyyy" required ng-pattern="/^[0-9]{2}/[0-9]{2}/[0-9]{4}$/" class="form-control input-md" >
+				  </div>
+				  <span class="col-md-5 help-block field-validation-error">
+				  		<span ng-show="showError(accountFrm.date_of_birth, 'required')">Required.</span>
+						<span ng-show="showError(accountFrm.date_of_birth, 'pattern')">Please enter a date in mm/dd/yyyy format.</span>
+				  </span>			
+				</div>
+				
+				<div class="form-group" ng-class="hasError(accountFrm.email)">
+					<label class="col-md-4 control-label" for="email"><span class="required">*</span> Email:</label>
+					<div class="col-md-4">
+				    	<input id="email" name="email"  ng-model="user.email" type="email" required ng-maxlength="50" class="form-control">
+					</div>
+					<span class="col-md-4 help-block field-validation-error">
+						<span ng-show="showError(accountFrm.email, 'required')">Required.</span>
+						<span ng-show="showError(accountFrm.email, 'email')">Please enter a valid email.</span>
+					</span>	
+				</div>			
+				
+				
+				<br>
+				<p>The following security question will help us verify your identity should you forget your password.</p>
+				
+				<div class="form-group" ng-class="hasError(accountFrm.hint_question)">
+					<label class="col-md-4 control-label" for="hint_question"><span class="required">*</span> Security Question:</label>
+				 	<div class="col-md-6">
+						<select id="hint_question" name="hint_question" ng-model="user.hint_question" required ng-options="H.RV_LOW_VALUE as H.RV_MEANING for H in hintQuestionArray" class="form-control">
+							<option value="">Please Choose Your Question</option>
+						</select>
+				 	</div>
+					<span class="col-md-2 help-block field-validation-error"
+						ng-show="showError(accountFrm.hint_question, 'required')">Required.</span>		  
+				</div>
+				
+				<div class="form-group" ng-class="hasError(accountFrm.hint_answer)">
+					<label class="col-md-4 control-label" for="hint_answer"><span class="required">*</span> Answer:</label>
+					<div class="col-md-6">
+				    	<input id="hint_answer" name="hint_answer" ng-model="user.hint_answer" type="text" required ng-maxlength="30" class="form-control">
+					</div>
+					<span class="col-md-2 help-block field-validation-error"
+						ng-show="showError(accountFrm.hint_answer, 'required')">Required.</span>	
+				</div>				
+		
+			</fieldset>
+			
+			<div class="text-center">
+				<button can-save="accountFrm" class="submit btn btn-primary" >Update My Account</button>
+				 &nbsp; or <a class="text-danger" href="#/myaccount">Cancel</a>
+			</div>					
+		
+		</form>
+
+	</div>
+</div>
+
+
+<!-- DEBUG
+<pre>{{user| json}}</pre>
+ -->

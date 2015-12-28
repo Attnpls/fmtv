@@ -1,0 +1,57 @@
+
+<div layout="row" layout-sm="column" layout-padding>
+
+  <div flex flex-order-sm="2" >
+
+    <div class="panelTitle">
+      <md-checkbox ng-model="configuration.speakerbar.hasspeakerbar" aria-label="Add Speaker Bar Condealment" style="margin: 0;" ng-click="selectSpeakerbar()">
+        Add speaker bar concealment. $450
+      </md-checkbox>
+    </div>
+
+    <form novalidate name="seakersFrm" id="seakersFrm" ng-show="configuration.speakerbar.hasspeakerbar==1"  >
+        
+        <md-input-container ng-class="hasError(speakerbarFrm.makemodel)">
+          <label for="makemodel">Brand and Model</label>  
+          <input id="makemodel" name="makemodel" type="text"
+          ng-model="configuration.speakerbar.makemodel" 
+          ng-required="speakerbarFrm.hasspeakerbar-1">
+        </md-input-container>
+        
+        <!-- Select Basic -->
+        <md-radio-group ng-model="configuration.speakerbar.mounted" layout="row" layout-align="start center">
+          <span>Mounted: </span>
+          <md-radio-button value="above">Above TV</md-radio-button>
+          <md-radio-button value="below">Below TV</md-radio-button>
+        </md-radio-group>   
+
+        
+        <!-- Text input-->
+        <div layout="row" layout-align="start center">
+
+          <div>Gap between TV and Speaker Bar:</div>
+          <md-input-container ng-class="hasError(speakerbarFrm.gap)">
+            <label for="gap">Gap</label>  
+            <input id="gap" name="gap" type="number" size="2" min="0" max="10" ng-model="configuration.speakerbar.gap">
+          </md-input-container>
+          <div>inches</div> 
+        </div>
+
+        <md-input-container>
+          <label>Special Instructions</label>
+          <textarea ng-model="configuration.speakerbar.instructions" columns="1" md-maxlength="500"></textarea>
+        </md-input-container>
+
+    </form>
+
+  </div>
+
+  <div flex-gt-sm="40" flex-order-sm="1" layout="row" layout-align="center start">
+    <img src="assets/img/speakerbar.jpg" class="imgFit" style="margin:17px;">
+  </div>
+
+</div>
+
+
+
+        

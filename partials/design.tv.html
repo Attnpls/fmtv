@@ -1,0 +1,119 @@
+
+<form novalidate name="tvSizeFrm" id="tvSizeFrm">
+<div layout="column" layout-padding>
+
+	<div class="panelTitle" layout="column" layout-gt-sm="row" layout-align-gt-sm="start end">
+		<span class="padRight">What size is your TV?</span> 
+		<span class="smaller">Please provide one of the following:</span>
+	</div>
+
+	<section layout="row" layout-align="center center" ng-init="tvSizeBy=1" 
+		ng-class-sm="small">
+		<md-button class="groupX left" ng-click="tvSizeBy=1" ng-class="{active: tvSizeBy==1}">
+			<span hide-sm>Diagonal Screen </span>Size
+		</md-button>
+		<md-button class="groupX middle" ng-click="tvSizeBy=2" ng-class="{active: tvSizeBy==2}">
+			<span hide-sm>Brand & </span>Model
+		</md-button>
+		<md-button class="groupX right" ng-click="tvSizeBy=3" ng-class="{active: tvSizeBy==3}">
+			<span hide-sm>Outside </span>Dimensions
+		</md-button>
+	</section>
+
+	<div ng-show="tvSizeBy==1" class="panelSizeBy">
+
+		<!--
+		<div layout="row" layout-align="center center" class="titleRow">
+			<img ng-src="assets/img/tvscreensize-512.png"></img> 
+			<div class="titleText">Diagonal Screen Size:</div>
+		</div> -->
+		
+		<div style="text-align:center;">
+			<md-button ng-repeat="standardSize in lkupScreenSizes" class="stdTvSizeLink md-raised md-primary"  
+			ng-click="standardSizeClick(standardSize.value)"
+			ng-class="{ 'md-warn' : configuration.tv.diagscreensize == standardSize.text }">
+			{{standardSize.text}} inch</md-button>
+		</div>
+
+		<div layout="row" layout-align="center center">
+			<md-button  class="screensizeCheckbox md-raised md-primary" ng-click="hidediagscreensizeFrm = !hidediagscreensizeFrm">Other</md-button>
+
+			<div layout="row" layout-align="start center"  
+			ng-init="hidediagscreensizeFrm=true" ng-hide="hidediagscreensizeFrm">
+
+			    <md-input-container ng-class="hasError(tvSizeFrm.diagscreensize)">
+					<label for="diagscreensize">Size</label>
+					<input name="diagscreensize" ng-model="configuration.tv.diagscreensize" 
+					size="4" ng-pattern="/^[0-9]{1,3}$/"
+					ng-focus="diagscreensizeFocus()">
+			    </md-input-container>
+			    <div>inches</div>
+			</div>
+		</div>
+
+	  	<div  layout="row" layout-align="center center" class="field-validation-error" ng-show="tvSizeFrm.diagscreensize.$invalid" layout="row" layout-align="end start">Screen size must be a number.</div>
+
+	</div>
+
+	<div ng-show="tvSizeBy==2" class="panelSizeBy modelLookup">
+
+		<div layout="row" layout-sm="column"  layout-align="center center" class="titleRow">
+
+			<div layout="row" layout-align="center center" >
+				<!--<img ng-src="assets/img/tvmodel-512.png"></img>  -->	
+				<div class="titleText">TV Model Number:</div>
+			</div> 
+
+			<md-input-container ng-class="hasError(tvSizeFrm.makemodel)">
+				<label for="tvmodelname">Brand/Model</label>
+
+				<input name="tvmodelname" type="text" ng-model="configuration.tv.makemodel" 
+				typeahead="thismodel.makemodel for thismodel in qryModels($viewValue)" 
+				typeahead-on-select="onSelectTVModelName($item, $model, $label)" 
+				typeahead-wait-ms="400" typeahead-min-length="2" >
+			</md-input-container>
+		</div>
+
+		<div class="field-validation-warn" ng-show="configuration.tv.makemodel && !makeModelFound" layout="row" layout-align="center center">The TV model number you entered is not yet in our database. Please enter the Manufacturer and Model Number in the field above and also provide screen size or overall dimensions below.</div>
+
+	</div>
+
+	<div ng-show="tvSizeBy==3" class="panelSizeBy">
+
+		<div layout="row" layout-sm="column"  layout-align="center center" class="titleRow">
+
+			<div layout="row" layout-align="center center" >
+				<!-- <img ng-src="assets/img/tvdimensions-512.png"></img> -->  	
+				<div class="titleText">Outside Measurements:</div>
+			</div>
+
+			<div layout="row" layout-align="start center">
+
+			    <md-input-container ng-class="hasError(tvSizeFrm.height)">
+					<label for="height">Height</label>
+					<input name="height" ng-model="configuration.tv.height" 
+					size="4" min="10" max="150" ng-pattern="/^[0-9]{1,3}$/"
+					ng-blur="calculatediagscreensize()">
+			    </md-input-container>
+
+			    <div>inches&nbsp;by </div>
+
+			    <md-input-container ng-class="hasError(tvSizeFrm.width)">
+					<label for="width">Width</label>
+					<input name="width" ng-model="configuration.tv.width" 
+					size="4" min="10" max="150" ng-pattern="/^[0-9]{1,3}$/"
+					ng-blur="calculatediagscreensize()">
+			    </md-input-container>
+
+				<div>inches.</div>    
+			</div>
+
+		</div>
+
+		<div class="field-validation-error" ng-show="tvSizeFrm.height.$invalid" layout="row" layout-align="center center">Height must be a number between 10 and 150.</div>
+  		<div class="field-validation-error" ng-show="tvSizeFrm.width.$invalid" layout="row" layout-align="end center">Width must be a number between 10 and 150.</div>
+
+	</div>
+
+</div>
+</form>

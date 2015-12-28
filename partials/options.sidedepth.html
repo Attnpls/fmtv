@@ -1,0 +1,116 @@
+<md-content flex>
+        
+  <md-list>
+
+    <md-list-item class="md-3-line sideDepthlItem" 
+      ng-click="selectSidedepth(0)" 
+      ng-class="{'selected': configuration.sidedepth.sidedepth == 0}" >
+
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.sidedepth.sidedepth == 0">
+        <md-icon md-svg-icon="check"/>
+      </md-button>   
+
+      <img src="assets/img/sidedepth0.jpg" alt="Recessed">
+
+      <div class="md-list-item-text">
+        <h3>Recessed (no side depth)</h3>
+
+        <div class="price">
+          <span ng-hide="configuration.tv.diagscreensize" 
+            class="alert link"
+            ng-click="goTo('design','tv');"
+            layout="row" layout-align="start middle">
+            <md-icon md-svg-icon="alert"></md-icon> <span flex>Please Set TV Size for Price</span>
+          </span>
+          <span ng-show="configuration.tv.diagscreensize">
+            Price: {{calculateSideDepthPrice(0) | currency}}
+          </span>                        
+        </div>
+      </div>
+
+      <md-button class="md-secondary md-button md-raised details"
+        aria-label="Details"
+        ng-click="sidenavPage('Recessed Side Depth',configuratorPages['Configurator-Help-BB-N'])">
+        Details
+      </md-button>
+
+      <md-divider ></md-divider>
+
+    </md-list-item>
+
+    <md-list-item class="sideDepthlItem md-3-line" 
+      ng-hide="configuration.type.indexOf('art') > 0"
+      ng-click="selectSidedepth(1.5)" 
+      ng-class="{'selected': configuration.sidedepth.sidedepth == 1.5}" >
+
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.sidedepth.sidedepth == 1.5">
+        <md-icon md-svg-icon="check"/>
+      </md-button>                 
+      <img src="assets/img/sidedepth1.jpg"  alt="1.5-inch Universal">
+
+      <div class="md-list-item-text">
+        <h3>1.5-inch Universal</h3>
+        <div class="price">
+          <span ng-hide="configuration.tv.diagscreensize" 
+            class="alert link"
+            ng-click="goTo('design','tv');"
+            layout="row" layout-align="start middle">
+            <md-icon md-svg-icon="alert"></md-icon> <span flex>Please Set TV Size for Price</span>
+          </span>
+          <span ng-show="configuration.tv.diagscreensize">
+            Price: {{calculateSideDepthPrice(1.5) | currency}}
+          </span> 
+        </div>  
+      </div>
+    
+      <md-button class="md-secondary md-button md-raised details"
+        aria-label="Details"
+        ng-click="sidenavPage('1.5-inch Universal Side Depth',configuratorPages['Configurator-Help-BB-B'])">
+        Details
+      </md-button>
+
+      <md-divider ></md-divider>      
+
+    </md-list-item>
+  
+
+    <md-list-item class="sideDepthlItem md-3-line" 
+      ng-click="selectSidedepth(3)" 
+      ng-class="{'selected': configuration.sidedepth.sidedepth == 3}" >
+
+      <md-button class="md-fab md-mini itemselected" aria-label="selected"
+        ng-show="configuration.sidedepth.sidedepth == 3">
+        <md-icon md-svg-icon="check"/>
+      </md-button>                 
+      <img src="assets/img/sidedepth3.jpg" alt="3-inch Universal">
+
+      <div class="md-list-item-text">
+        <h3>3-inch Universal</h3>
+        <div class="price">
+          <span ng-hide="configuration.tv.diagscreensize" 
+            class="alert link"
+            ng-click="goTo('design','tv');"
+            layout="row" layout-align="start middle">
+            <md-icon md-svg-icon="alert"></md-icon> <span flex>Please Set TV Size for Price</span>
+          </span>
+          <span ng-show="configuration.tv.diagscreensize">
+            Price: {{calculateSideDepthPrice(3) | currency}}
+          </span> 
+        </div>                  
+      </div>
+
+      <md-button class="md-secondary md-button md-raised details"
+        aria-label="Details"
+        ng-click="sidenavPage('3-inch Universal Side Depth',configuratorPages['Configurator-Help-BB-R'])">
+        Details
+      </md-button>
+
+      <md-divider ></md-divider>
+
+    </md-list-item>
+     
+  </md-list>
+
+</md-content>

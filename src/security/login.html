@@ -1,0 +1,65 @@
+
+   		<div class="panel panel-default" ng-controller="loginCtrl"  role="form">
+		  	<div class="panel-heading">
+		    	<h3 class="panel-title">Please Sign In</h3>
+		 	</div>
+		  	<div class="panel-body">
+			
+		    	<form name="loginFrm" novalidate >
+				
+					<!--
+					<div class="alert fade in alert-danger" style="display: none;">
+						<i class="icon-remove close" data-dismiss="alert"></i> Error message text. 
+					</div>
+					-->
+				
+                    <fieldset>
+                  
+						<div class="form-group"  ng-class="!loginFrm.username.$pristine && hasError(loginFrm.username)">
+							<input name="username" ng-model="credentials.username" type="text"  ng-maxlength="20"
+								class="form-control input-lg" placeholder="Username or email" autofocus="autofocus" required autofillable />						
+							<span class="help-block field-validation-error" ng-show="!loginFrm.username.$pristine && showError(loginFrm.username, 'required')">Required.</span>				
+						</div>
+	
+						<div class="row">
+				    		<div class="form-group col-sm-8" ng-class="!loginFrm.password.$pristine && hasError(loginFrm.password)">
+				    			<input name="password" ng-model="credentials.password" class="form-control input-lg" placeholder="Password"  
+								 type="password"  ng-minlength="8" ng-maxlength="20" required autofillable />
+								 <span class="help-block field-validation-error" ng-show="!loginFrm.password.$pristine && showError(loginFrm.password, 'required')">Required.</span>		  
+				    		</div>
+							<div class="form-group col-sm-4"> 
+				    			<button class="btn btn-primary pull-right btn-lg" ng-click="doLogin()" >Sign in</button>
+							</div>
+						</div>
+						
+						<!--
+						<div class="input-group" style="width:100%">
+							<label class="checkbox">
+								<div class="checker">
+									<span><input class="uniform" name="remember" type="checkbox"></span>
+								</div> 
+								Remember me &nbsp;&bull;&nbsp; <a href="">Forgot Password?</a>
+							</label> 
+						</div>						
+						-->
+							
+			    	</fieldset>
+		      	</form>
+				
+				<hr>
+				<h4><a href="#/iforgot">Forgot Your Password?</a></h4>
+				
+				<!--
+				<p>Reset your password.</p>
+				<hr>
+				<h4>Don't have an account yet?</h4>
+				<p><a href="#/signup">Register as a Volunteer</a></p>
+				-->
+				
+				<!-- DEBUG
+				<pre>{{credentials| json}}</pre>  -->
+				
+		    </div>
+		</div><!-- /panel -->
+
+		
