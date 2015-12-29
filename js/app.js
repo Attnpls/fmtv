@@ -30,10 +30,8 @@ var app = angular.module('FMTVApp', [
   ])
 
 .constant("appConfig", {
-  endpoint: '/fmtv/server/api/v1/index.cfm'
+  endpoint: 'https://framemytv.com/api/v1/index.cfm'
 })
-
-//.value('appConfig', {endpoint: '/fmtv/server/api/v1/index.cfm'})
 
 .config(['$mdThemingProvider', '$mdIconProvider', '$locationProvider', '$authProvider','appConfig', function($mdThemingProvider, $mdIconProvider, $locationProvider, $authProvider, appConfig) {
 
@@ -849,10 +847,10 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
   /* $auth.getPayload = { 
           NAME: "Test User", 
           BASKET: "150823182707_73_129_72_88", 
-          ROLE: "Administrator",        
+          ROLE: "Administrator",                // user group
           EXP: 1452366864262, 
           EMAIL: "mj@attentionplease.com", 
-          ACCOUNTID: "", 
+          ASSOCIATEID: "",                      // user is associated with this account id
           USERID: 8 
     } 
   */     
@@ -869,7 +867,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     return ($scope.currentUser.USERID = $scope.site.admin_id) ? true : false;
   };
   $scope.isAccountAssociate = function() {
-    return ($scope.currentUser.ACCOUNTID = $scope.configuration.meta.account_id) ? true : false;
+    return ($scope.currentUser.ASSOCIATEID = $scope.configuration.meta.account_id) ? true : false;
   };
 
   $scope.currentusername = function() {
@@ -1844,7 +1842,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     return ($scope.currentUser.USERID = $scope.site.admin_id) ? true : false;
   };
   $scope.isAccountAssociate = function() {
-    return ($scope.currentUser.ACCOUNTID = $scope.configuration.meta.account_id) ? true : false;
+    return ($scope.currentUser.ASSOCIATE = $scope.configuration.meta.account_id) ? true : false;
   };
 
   $scope.currentusername = function() {
