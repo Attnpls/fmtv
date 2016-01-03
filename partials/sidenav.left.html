@@ -1,7 +1,4 @@
 
-
-<!-- partials.sidenav_left -->
-<!-- md-is-locked-open="$mdMedia('gt-sm')" -->
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
 
   <md-toolbar class="md-theme-indigo" ng-controller="LeftCtrl as ctrl">
@@ -30,10 +27,11 @@
     <md-button ng-click="newConfiguration();">Start a New Design</md-button>
     <md-button ng-click="openConfigurationsDialog();">Open a Saved Design</md-button>
 
-    <!-- -->
+    <!-- Admin Debug Stuff -->
     <div>
       <br><br>  
       <md-divider ></md-divider>
+
       <h5>Current User</h5>   
       <pre>{{currentuser() | json}}</pre> 
       <div>

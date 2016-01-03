@@ -1,13 +1,21 @@
 <form novalidate name="saveConfiguration" id="configSaveFrm">
 
+	<!-- Configuration.meta fileds:
+        name,                 // usually email address of customer  
+        job_name,             // name of this configuration, eg: 'living room'
+        buyer_comments: "",   // 255 chars ONLY
+        adminnotes: "",		  // text area
+        status: "",           // careful! ordered, ect.
+        isPublic: 1 		  // flag to include this configuration in search results
+	-->
 
-	<div layout="column" layout-padding>
+	<div layout="column" layout-padding >
+		<div layout="column" layout-padding >
 
-		<!--
-		<div layout="row" layout-align="start center" class="subtitle">
-			<strong>Save this Design:</strong>
-		</div>
-		-->
+		<div class="alert md-title" layout="row" ng-show="!isClean()" >
+			<md-icon md-svg-icon="alert" style="width:48px; height:48px; padding-right:20px;"></md-icon> 
+			<div flex >Your design has changed. Please save it now.</div>
+		</div>		
 
 		<div layout="row" layout-sm="column" layout-align="start center" class="titleRow">
 			 
@@ -17,7 +25,7 @@
 			
 			<md-input-container ng-class="hasError(tvSizeFrm.makemodel)">
 				<label for="metajob">Design Name</label>
-				<input name="metajob" type="text" ng-model="configuration.meta.job_name">
+				<input name="metajob" type="text" ng-model="configuration.meta.job_name" required >
 			</md-input-container>
 
 			<div layout="row" layout-align="start center" >
@@ -26,13 +34,13 @@
 
 			<md-input-container ng-class="hasError(tvSizeFrm.makemodel)">
 				<label for="metaname">E-mail Address</label>
-				<input name="metaname" type="text" ng-model="configuration.meta.name">
+				<input name="metaname" type="text" ng-model="configuration.meta.name" required >
 			</md-input-container>
 
 		</div>
 
+		<!--
 		<div layout="row" layout-align="start center">
-			<!--
 			<md-checkbox 
 				ng-model="configuration.meta.status" 
 				ng-true-value="contact" 
@@ -40,44 +48,24 @@
 				aria-label="Please contact me">
 			  Please contact me.
 			</md-checkbox>
-		-->
 		</div>
+		-->
 
-
-		<md-button class="md-button md-primary" ng-click="save();" aria-label="Save Design">
+		<md-button class="md-button md-primary" ng-click="save();" ng-disabled="isClean()" aria-label="Save Design">
 	      <md-icon md-svg-icon="check"></md-icon> Save Design
 	      <md-tooltip md-direction="down">Save Design</md-tooltip>
 	    </md-button>
-
-		<!-- Round button 
-	    <md-button class="md-fab md-mini md-primary" ng-click="save();" aria-label="Save Design">
-	      <md-icon md-svg-icon="check"></md-icon>
-	      <md-tooltip md-direction="down">Save Design</md-tooltip>
-	    </md-button>
-		-->
-	</div>
-
-
-	<div layout="row" layout-align="start center">
-		You can find this design later buy entering your email address in the search bar above or by pasting the link below into your web browser:
-	</div>
-	<div layout="row" layout-align="start center" style="margin-top:10px;">
-		Direct link: &nbsp;
-		<input value="app/?id={{configuration.meta.configuration_id}}" 
-		style="border:1px solid whitesmoke; width:80%;">
 	</div>
 
 </form>
 
 
-
-
-<!--
-<div ng-show="!configuration.canorder"> 
+<!-- MESSAGE - NOT READY TO ORDER YET -->  
+<div layout="column" ng-show="!configuration.canorder && isClean()"> 
 	<br><br>
 	<div class="alert md-title" layout="row">
 		<md-icon md-svg-icon="alert" style="width:48px; height:48px; padding-right:20px;"></md-icon> 
-		<div flex >OOPS! This design is not ready to order yet.<br>Please review the Design Summary for more information.</div>
+		<div flex >OOPS! This design is not ready to order yet.<br>Please review the Summary for more information.</div>
 	</div>
 	<br><br>
 	<div class="md-actions">
@@ -87,8 +75,32 @@
     	</md-button> 
  	 </div>
 </div>
--->
 
-<div ng-show="configuration.canorder">
+<!-- ORDER
+	Display order form if:
+	configuration.canorder = 1      Configuration is complete
+	isClean = true  				Configuration is saved
+									Authenticated??
+-->
+<div layout="column" layout-padding ng-show="isClean() && configuration.canorder">
+
+	<h1>Order form</h1>
 	<md-button class="md-raised md-primary"><md-icon md-svg-icon="cart"></md-icon> Add to Cart</md-button>
-</div>
+
+</div>	
+
+
+<!-- DIRECT LINK TO THIS CONFIGURATION -->
+<!-- Show link if saved 
+<div layout="column" layout-padding ng-show="configuration.meta.configuration_id">
+
+	<div layout="row" layout-align="start center">
+		You can find this design later buy entering your email address in the search bar above or by pasting the link below into your web browser:
+	</div>
+	<div layout="row" layout-align="start center" style="margin-top:10px;">
+		Direct link: &nbsp;
+		<input value="app/?id={{configuration.meta.configuration_id}}" 
+		style="border:1px solid whitesmoke; width:80%;">
+	</div>
+</div>	-->
+	

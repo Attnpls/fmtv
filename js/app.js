@@ -16,7 +16,6 @@ var app = angular.module('FMTVApp', [
   'ngSanitize',           // sanitize data input
   'satellizer',
  // 'ngCookies',            // cookies for authentication
- // 'security',             // authentication and session stuff
   'ui.grid',              // data grid - http://ui-grid.info/docs/#/tutorial/101_intro
   'ui.bootstrap',         // bootstrap
   'ngMaterial',           // material design
@@ -30,6 +29,7 @@ var app = angular.module('FMTVApp', [
   ])
 
 .constant("appConfig", {
+  //endpoint: '/fmtv/server/api/v1/index.cfm'
   endpoint: 'https://framemytv.com/api/v1/index.cfm'
 })
 
@@ -93,17 +93,10 @@ var app = angular.module('FMTVApp', [
 
 }])
 
-// This is set up to share scopes between controllers.
-// I was going to use it for authentication, but it is no longer needed.
-.factory('sharedScope', function ($rootScope) {
-    var mem = {};
+// Share scopes between controllers -- site
+.factory('sharedScope', function () {
     return {
-        store: function (key, value) {
-            mem[key] = value;
-        },
-        get: function (key) {
-            return mem[key];
-        }
+      site: {}
     };
 })
 
@@ -801,6 +794,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
         }
       }
 
+      delete $scope.configuration.stopRules;
       delete $scope.configuration.gototab;
       delete $scope.configuration.gotopane;
 
@@ -864,10 +858,10 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     return ($scope.currentuser.ROLE ="Administrator") ? true : false;
   };
   $scope.isAccountAdmin = function() {
-    return ($scope.currentUser.USERID = $scope.site.admin_id) ? true : false;
+    return ($scope.currentuser.USERID = $scope.site.admin_id) ? true : false;
   };
   $scope.isAccountAssociate = function() {
-    return ($scope.currentUser.ASSOCIATEID = $scope.configuration.meta.account_id) ? true : false;
+    return ($scope.currentuser.ASSOCIATEID = $scope.configuration.meta.account_id) ? true : false;
   };
 
   $scope.currentusername = function() {
@@ -902,16 +896,27 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
 
     $scope.configuration = {};
 
+    console.log("Start configuration load.")
+
     // Look up existing configuration
     if( configuration_id.length ){
+
+      console.log("Configuration id provided.");
 
       $http({
         method: 'GET', 
         url: appConfig.endpoint + '/configuration/' + configuration_id
       }).success(function(response, status, headers, config) {
-        if( response.result == 'true') {
-          $scope.configuration = response.data;
-        } 
+
+        console.log("configuration retrieved.");
+
+        if( response.result == true) {
+          $scope.configuration = response.data.DesignData;
+          console.log("configuration restored.");
+        } else {
+          console.log(response);
+        }
+
       });
 
     }
@@ -919,18 +924,16 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     // Load new configurator
     if( !Object.keys($scope.configuration).length ){
 
-      // Configuration ID is varchar 16. Make a new ID using epoch 11 + random 4 chars.
-      configuration_id = (new Date).getTime().toString(16) + Math.random().toString(16).slice(2, 6);
-
       $scope.configuration = {
         // Meta are the other 'configurations' database table fields
         meta: { 
-          configuration_id:   configuration_id, 
+          configuration_id:   "", 
           name:               "",
           user_id:            0,           
           account_id:         account_id,       
           basketnum:          "",      
           job_name:           "My Design",
+          ispublic:           1,
           buyer_comments:     "", 
           adminnotes:         "",
           orders_id:          "",
@@ -1147,10 +1150,19 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     // Run the rules
     doRules();
 
+    $scope.configurationClean = angular.copy($scope.configuration);
+    delete $scope.configurationClean.stopRules;
+    delete $scope.configurationClean.gototab;
+    delete $scope.configurationClean.gotopane;
   }
   loadConfiguration(URLparams);
 
-  
+  // Save configuration only if dirty (not clean)
+  $scope.isClean = function() {
+    return  JSON.stringify($scope.configuration) == JSON.stringify($scope.configurationClean);
+    //angular.equals($scope.configuration, $scope.configurationClean);
+  }  
+
   // set theme ($scope.site) to configuration.account_ID
   var setTheme = function(){
 
@@ -1160,7 +1172,8 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
       logo: 'assets/img/fmtv_225.png',   // fmtv_225.png, NorthStar.jpg, lowellEdwards.png
       weburl: '',
       theme: 'default',       // default, red, blue, brown, blue-gray
-      titlebarColor: ''       
+      titlebarColor: '',
+      adminid: '' 
     };
 
     if($scope.configuration.meta.account_id > 0){
@@ -1193,6 +1206,8 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
 
       });
     }
+
+    sharedScope.site = $scope.site;
   }
   setTheme();
 
@@ -1488,7 +1503,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
 
   $http({
     method: 'GET', 
-    url: appConfig.endpoint + '/art'
+    url: appConfig.endpoint + '/art?maxresults=1000'
   }).success(function(response, status, headers, config) {
  
       $scope.art.all = response.Items;
@@ -1746,8 +1761,25 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     return ngModelController.$valid && ngModelController.$dirty;    
   }; 
 
-  $scope.save = function(ngModelController) {
-     $scope.alert('In Development','Configuration Save Function');       
+  $scope.save = function() {
+
+    // Create new configurationID
+    // Configuration ID is varchar 16. Make a new ID using epoch 11 + random 4 chars.
+    var configuration_id = (new Date).getTime().toString(16) + Math.random().toString(16).slice(2, 6);
+    $scope.configuration.meta.configuration_id = configuration_id;
+    
+    $http.post(appConfig.endpoint + '/configuration/', $scope.configuration)
+      .success(function(data, status, headers, config) {
+
+        if( data.result == true) {
+          $scope.configurationClean = angular.copy($scope.configuration);
+          $scope.message("Design Saved.");
+        } else {
+          $scope.message(data.error);
+        }
+        
+      });
+      
   }; 
 
 }])
@@ -1829,9 +1861,12 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
 
 .controller('LeftCtrl', [ '$scope', 'sharedScope', '$auth', '$mdSidenav', function($scope, sharedScope, $auth, $mdSidenav){
 
+  $scope.site = sharedScope.site;
+
   $scope.currentuser = function() {
     return $auth.getPayload();
   };
+
   $scope.isAuthenticated = function() {
     return $auth.isAuthenticated();
   };
@@ -1839,10 +1874,10 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     return ($scope.currentuser.ROLE ="Administrator") ? true : false;
   };
   $scope.isAccountAdmin = function() {
-    return ($scope.currentUser.USERID = $scope.site.admin_id) ? true : false;
+    return ($scope.currentuser.USERID = $scope.site.adminid) ? true : false;
   };
   $scope.isAccountAssociate = function() {
-    return ($scope.currentUser.ASSOCIATE = $scope.configuration.meta.account_id) ? true : false;
+    return ($scope.currentuser.ASSOCIATE = $scope.configuration.meta.account_id) ? true : false;
   };
 
   $scope.currentusername = function() {
@@ -1854,7 +1889,6 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
       return user.EMAIL;
     }
   };
-
 
   $scope.doLogout = function() {
     $auth.logout(); 
