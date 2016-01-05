@@ -1094,8 +1094,8 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
           var mirror = response.data[0];
           $scope.configuration.mirror.mirrorid = mirror.mirrorid;
           $scope.configuration.mirror.name = mirror.name;
-          $scope.configuration.mirror.base = mirror.base;
-          $scope.configuration.mirror.factor = mirror.factor;
+          $scope.configuration.mirror.base = parseInt(mirror.base);
+          $scope.configuration.mirror.factor = parseInt(mirror.factor);
         } else {
           $scope.alert('Error 1020',response.error);
         } 
@@ -1139,8 +1139,8 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
           $scope.configuration.liner.linertext = liner.caption;
           $scope.configuration.liner.previewimage = liner.previewimage;
           $scope.configuration.liner.category = liner.category;
-          $scope.configuration.liner.base = liner.base;
-          $scope.configuration.liner.factor = liner.factor;
+          $scope.configuration.liner.base = parseInt(liner.base);
+          $scope.configuration.liner.factor = parseInt(liner.factor);
         } else {
           $scope.alert('Error 1065',response.error);
         } 
@@ -1401,7 +1401,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     if( $scope.configuration.tv.diagscreensize >= 52 ){ 
       stylefactor += 4; 
     }     
-    return Math.ceil( stylebase + (stylefactor * $scope.configuration.tv.diagscreensize ) );
+    return Math.ceil( parseInt(stylebase) + (parseInt(stylefactor) * $scope.configuration.tv.diagscreensize ) );
   }
   
   // Select Frame
@@ -1431,7 +1431,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
   
   // Finish Price Calculation
   $scope.calculateFinishPrice = function (colorfactor,colorbase) { 
-    return  Math.ceil( colorbase + (colorfactor * $scope.configuration.tv.diagscreensize ) );
+    return  Math.ceil( parseInt(colorbase) + (parseInt(colorfactor) * $scope.configuration.tv.diagscreensize ) );
   }
 
   // Select Frame Finish
@@ -1469,11 +1469,11 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
   
   // calculatemirrorPrice
   $scope.calculateMirrorPrice = function (mirror) { 
-    var xfactor = mirror.factor;
+    var xfactor = parseInt(mirror.factor);
     if( $scope.configuration.tv.diagscreensize >= 52 ){
-      xfactor = mirror.factor + 4;
+      xfactor = parseInt(mirror.factor) + 4;
     }
-    return Math.ceil( mirror.base + (xfactor * $scope.configuration.tv.diagscreensize ) );
+    return Math.ceil( parseInt(mirror.base) + (xfactor * $scope.configuration.tv.diagscreensize ) );
   }
 
 
@@ -1481,8 +1481,8 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
   $scope.selectMirror = function (mirror) {
     $scope.configuration.mirror.mirrorid = mirror.mirrorid;
     $scope.configuration.mirror.name = mirror.name;
-    $scope.configuration.mirror.base = mirror.base;
-    $scope.configuration.mirror.factor = mirror.factor;
+    $scope.configuration.mirror.base = parseInt(mirror.base);
+    $scope.configuration.mirror.factor = parseInt(mirror.factor);
     $scope.message("Mirror '" + mirror.name + "' selected."); 
     doRules();
   }
@@ -1545,8 +1545,8 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
   $scope.calculateArtSubframePrice = function (credit) {
     var artBase = 1400;
     var artFactor = 30;  
-    if( $scope.configuration.tv.diagscreensize >= 52 ) artFactor += 8; 
-    return calculatedprice = Math.ceil( artBase + (artFactor * $scope.configuration.tv.diagscreensize ) );
+    if( $scope.configuration.tv.diagscreensize >= 52 ) parseInt(artFactor) += 8; 
+    return calculatedprice = Math.ceil( parseInt(artBase) + (parseInt(artFactor) * $scope.configuration.tv.diagscreensize ) );
   }
 
   // Select Artwork
@@ -1597,7 +1597,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
   
   // calculateLinerPrice
   $scope.calculateLinerPrice = function (liner) {   
-    return Math.ceil( liner.base + (liner.factor * $scope.configuration.tv.diagscreensize ) );
+    return Math.ceil( parseInt(liner.base) + ( parseInt(liner.factor) * $scope.configuration.tv.diagscreensize ) );
   }
   
   // select liner
@@ -1606,8 +1606,8 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     $scope.configuration.liner.linertext = liner.caption;
     $scope.configuration.liner.previewimage = liner.previewimage;
     $scope.configuration.liner.category = liner.category;
-    $scope.configuration.liner.base = liner.base;
-    $scope.configuration.liner.factor = liner.factor;
+    $scope.configuration.liner.base = parseInt(liner.base);
+    $scope.configuration.liner.factor = parseInt(liner.factor);
     $scope.message("Liner " + liner.caption + " selected.");
     doRules();
   }
@@ -1626,15 +1626,15 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
 
   // calculateArtControlPrice
   $scope.calculateArtControlPrice = function (item) {    
-    return Math.ceil( item.base + (item.factor * $scope.configuration.tv.diagscreensize ) );
+    return Math.ceil( parseInt(item.base) + (parseInt(item.factor) * $scope.configuration.tv.diagscreensize ) );
   }
     
   // select Art Control
   $scope.selectArtControl = function (item) {
     $scope.configuration.artcontrol.artcontrolid = item.artcontrolid;
     $scope.configuration.artcontrol.artcontroltext = item.name;
-    $scope.configuration.artcontrol.factor = item.factor;
-    $scope.configuration.artcontrol.base = item.base;
+    $scope.configuration.artcontrol.factor = parseInt(item.factor);
+    $scope.configuration.artcontrol.base = parseInt(item.base);
     $scope.message("Art Control " + item.name + " selected.");
     doRules();
   } 
@@ -1653,14 +1653,14 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
 
   // calculatetvControlPrice
   $scope.calculateTvControlPrice = function (item) {
-    return Math.ceil(item.base - 99);
+    return Math.ceil(parseInt(item.base) - 99);
   }
   
   $scope.selecttvControl = function (item) {
     $scope.configuration.tvcontrol.tvcontrolid = item.tvcontrolid;
     $scope.configuration.tvcontrol.tvcontroltext = item.name;
-    $scope.configuration.tvcontrol.factor = item.factor;
-    $scope.configuration.tvcontrol.base = item.base;  
+    $scope.configuration.tvcontrol.factor = parseInt(item.factor);
+    $scope.configuration.tvcontrol.base = parseInt(item.base);  
     $scope.message("TV Control " + item.name + " selected.");
     doRules();
   }       
@@ -1722,14 +1722,14 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     
   // calculate Install method price
   $scope.calculateInstallMethodPrice = function (item) { 
-    return Math.ceil( item.base + (item.factor * $scope.configuration.tv.diagscreensize ) );
+    return Math.ceil( parseInt(item.base) + (parseInt(item.factor) * $scope.configuration.tv.diagscreensize ) );
   }
     
   $scope.selectInstallMethod = function (item) {
     $scope.configuration.installmethod.installmethodid = item.installmethodid;
     $scope.configuration.installmethod.installmethodtext = item.name;
-    $scope.configuration.installmethod.base = item.base;
-    $scope.configuration.installmethod.factor = item.factor;
+    $scope.configuration.installmethod.base = parseInt(item.base);
+    $scope.configuration.installmethod.factor = parseInt(item.factor);
     $scope.message("Install Method " + item.name + " selected.");
     doRules();
   }   
