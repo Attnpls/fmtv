@@ -1409,6 +1409,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
     $scope.configuration.frame.style = style;
     $scope.message("Frame " + style.caption + " selected.");
 
+    /* Moved to open frame detail panel
     if(style.category == 'H'){
       $http({
         method: 'GET', 
@@ -1418,7 +1419,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
           if(response.result) $scope.frameFinishes = response.data;
           else $scope.alert('Error 1273',response.error);
       });
-    } 
+    }*/
 
     if( $mdSidenav('frameListPanel').isOpen() ){
       $mdSidenav('frameListPanel').close()
@@ -1435,11 +1436,21 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
   }
 
   // Select Frame Finish
-  $scope.selectFrameFinish = function (finish) {
+  $scope.selectFrameFinish = function (style, finish) {
+    $scope.configuration.frame.style = style;
     $scope.configuration.frame.finish = finish;
-    $scope.message("Frame finish " + finish.finishname + " selected.");
+
+    $scope.message("Frame " + finish.finishname + " selected.");
+
+    if( $mdSidenav('frameListPanel').isOpen() ){
+      $mdSidenav('frameListPanel').close()
+    }
+    if( $mdSidenav('frameDetailPanel').isOpen() ){
+      $mdSidenav('frameDetailPanel').close()
+    }
     doRules();
   }
+
 
   $scope.openFramesList = function(title,filterBy) {
     $scope.panelTitle = title;
@@ -1451,6 +1462,18 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
    $scope.openFramesDetail = function(title,frame) {
     $scope.panelTitle = title;
     $scope.item = frame;
+
+    if($scope.item.category == 'H'){
+      $http({
+        method: 'GET', 
+        url: appConfig.endpoint + '/finishes',
+        params: {stylename:$scope.item.stylename}
+      }).success(function(response, status, headers, config) {
+          if(response.result) $scope.frameFinishes = response.data;
+          else $scope.alert('Error 1273',response.error);
+      });
+    } 
+
     $mdSidenav('frameDetailPanel').open();
   };
 

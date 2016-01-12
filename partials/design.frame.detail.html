@@ -25,19 +25,54 @@
         layout="row" layout-align="start middle">
         <md-icon md-svg-icon="alert"></md-icon> <span flex>Please Set TV Size for Price</span>
       </span>
-      <span ng-show="configuration.tv.diagscreensize">
+      <span ng-show="configuration.tv.diagscreensize && (item.category != 'H')">
         Price: {{calculateStylePrice(item.stylefactor, item.stylebase) | currency }} 
         for a {{showTvDiagScreenSize()}} inch TV 
       </span> 
     </div>
 
-    <div>{{item.meta.job_name}}</div>     
-                  
-    <br>
-
-    <md-button  ng-click="selectFrameStyle(item)" class="md-raised md-primary">
+    <!-- Select non-hardwood frame style -->
+    <md-button ng-show="(item.category != 'H')" ng-click="selectFrameStyle(item)" class="md-raised md-primary">
       Select This Frame Style
     </md-button>
+
+
+    <!-- Hardwood frames require a finish selection -->
+     <md-list ng-show="item.category=='H'">
+
+        <md-list-item class="md-3-line mirrorItem" 
+          ng-repeat="finish in frameFinishes"
+          ng-click="selectFrameFinish(item, finish)"
+          ng-class="{'selected': configuration.frame.finish.finishid == finish.finishid}"
+          >
+          <md-divider ></md-divider>
+
+          <md-button class="md-fab md-mini itemselected" aria-label="selected"
+            ng-show="configuration.frame.finish.finishid == finish.finishid">
+            <md-icon md-svg-icon="check"/>
+          </md-button>      
+
+          <img ng-src="{{finish.thumburl}}" alt="{{finish.finishname}}">
+
+          <div class="md-list-item-text">
+            <h3>{{finish.finishname}}</h3>
+            <p ng-show="finish.materialdescription.length">On {{finish.materialdescription}}</p>
+            <div class="price">
+              <span ng-hide="configuration.tv.diagscreensize" 
+                class="alert link"
+                ng-click="goTo('design','tv');"
+                layout="row" layout-align="start middle">
+                <md-icon md-svg-icon="alert"></md-icon> <span flex>Please Set TV Size for Price</span>
+              </span>
+              <span ng-show="configuration.tv.diagscreensize">
+                Price: {{calculateStylePrice(item.stylefactor, item.stylebase) + calculateFinishPrice(finish.colorfactor,finish.colorbase) | currency}}
+              </span>
+            </div>
+          </div>
+        </md-list-item>
+      
+      </md-list>
+
 
     <!-- 
     <div class="sampleLinks">
