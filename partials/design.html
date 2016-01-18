@@ -29,20 +29,6 @@
     </v-pane-content>
   </v-pane>
 
-  <!-- Liner -->
-  <v-pane ng-hide="configuration.type.indexOf('frameless') == 0 || configuration.type == 'metro mirror'">
-    <v-pane-header  id="edit_liner" ng-click="accordion.expand(4)">
-      Liner Color<span ng-show="configuration.liner.linerid">: {{configuration.liner.linertext}}</span>
-    </v-pane-header>
-    <v-pane-content>
-       <md-button aria-label="Liner Help" ng-click="help('Frame Liner','configurator-options-liner-info')" class="help">
-        <md-icon md-svg-icon="info"></md-icon>
-        <md-tooltip md-direction="bottom">Help</md-tooltip>
-      </md-button>   
-      <div ng-include="'partials/design.liner.html'"></div>
-    </v-pane-content>
-  </v-pane>
-
   <!-- Mirror -->
   <v-pane ng-show="configuration.type.indexOf('mirror') > 0">
     <v-pane-header id="edit_mirror" ng-click="accordion.expand(2)">
@@ -71,7 +57,22 @@
     </v-pane-content>
   </v-pane>
 
+  <!-- Liner -->
+  <v-pane ng-hide="configuration.type.indexOf('frameless') == 0 || configuration.type == 'metro mirror'">
+    <v-pane-header  id="edit_liner" ng-click="accordion.expand(4)">
+      Liner Color<span ng-show="configuration.liner.linerid">: {{configuration.liner.linertext}}</span>
+    </v-pane-header>
+    <v-pane-content>
+       <md-button aria-label="Liner Help" ng-click="help('Frame Liner','configurator-options-liner-info')" class="help">
+        <md-icon md-svg-icon="info"></md-icon>
+        <md-tooltip md-direction="bottom">Help</md-tooltip>
+      </md-button>   
+      <div ng-include="'partials/design.liner.html'"></div>
+    </v-pane-content>
+  </v-pane>
+  
 </v-accordion>
+
 
 <!-- https://github.com/LukaszWatroba/v-accordion 
 <button ng-click="accordion.expandAll()">Expand all</button> 

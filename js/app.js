@@ -317,27 +317,38 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
           cb(false);
         }  
 
-    },{ "name": "Art side depth is 3 - reset default",
+    },{ "name": "Set default side depth",
         "priority": 1,
         "on": 1,
         "condition": function (fact, cb) {
-          //cb(fact.type.indexOf('art') < 0 && fact.sidedepth.sidedepth == 1.5); 
-          cb(fact.type.indexOf('art') < 0); 
+          cb( !fact.sidedepth.sidedepthid ); 
         },
         "consequence": function (cb) {
-          /*
-          this.sidedepth = {
-            sidedepth:         0.0,
-            sidedepthid:       1133,
-            sidedepthtext:     "Recessed",  
-            price_sidedepth:    0.0,
-          }*/
-          this.sidedepth = {
-            "sidedepth": 3,
-            "sidedepthid": 3,
-            "sidedepthtext": "3-inch Universal",
-            "price_sidedepth": 0
-          };        
+          
+          if (this.type.indexOf('art') > 0) {
+            this.sidedepth = {
+              "sidedepth": 3,
+              "sidedepthid": 3,
+              "sidedepthtext": "3-inch Universal",
+              "price_sidedepth": 0
+            }; 
+          } else {
+            /*
+            this.sidedepth = {
+              sidedepth:         0.0,
+              sidedepthid:       1133,
+              sidedepthtext:     "Recessed",  
+              price_sidedepth:    0.0,
+            }; 
+            */
+            this.sidedepth = {
+              "sidedepth": 1.5,
+              "sidedepthid": 1.5,
+              "sidedepthtext": "1.5-inch Universal",
+              "price_sidedepth": 0
+            }; 
+          }
+
           this.stopRules = false;
           cb(false);
         }
@@ -558,10 +569,67 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
           cb(false);
         }
 
+    // ART & MIRROR
+
+    },{ "name": "Art Not Set",
+        "priority": 13,
+        "on": 1,
+        "condition": function (fact, cb) {
+          cb( fact.type.indexOf('art') > 0 && fact.art.artid <= 0); 
+        },
+        "consequence": function (cb) {
+          this.canorder=0;
+          this.gototab="design";
+          this.gotopane="art";
+          this.stopRules = true;
+          cb(false);
+        }
+
+    },{ "name": "Mirror Not Set",
+        "priority": 14,
+        "on": 1,
+        "condition": function (fact, cb) {
+          cb( fact.type.indexOf('mirror') > 0 && fact.mirror.mirrorid <= 0); 
+        },
+        "consequence": function (cb) {
+          this.canorder=0;
+          this.gototab="design";
+          this.gotopane="mirror";
+          this.stopRules = true;
+          cb(false);
+        }
+
+    },{ "name": "Set Mirror Price",
+        "priority": 15,
+        "on": 1,
+        "condition": function (fact, cb) {
+          cb( fact.type.indexOf('mirror') > 0 ); 
+        },
+        "consequence": function (cb) {
+          if( this.tv.diagscreensize > 0 && this.mirror.mirrorid > 0 ) {  
+            this.mirror.price_mirror =  $scope.calculateMirrorPrice(this.mirror);
+          } else {
+            this.mirror.price_mirror = 0;
+          }
+          cb(false);
+        }
+
+    },{ "name": "Mirror Preview Image",
+        "priority": 16,
+        "on": 1,
+        "condition": function (fact, cb) {
+          cb( fact.type.indexOf('mirror') >= 0 && fact.mirror.mirrorid > 0); 
+        },
+        "consequence": function (cb) {
+          this.previewimage.preview_front_mirror = "Mirror" + this.tv.speakerlayout + "0" + this.previewimage.wallid + "00.png";
+          //console.log('mirror preview image set to ' + this.previewimage.preview_front_mirror);
+          cb(false);
+        }
+
     // LINER 
 
     },{ "name": "Liner category must match frame category",
-        "priority": 13,
+        "priority": 17,
         "on": 1,
         "condition": function (fact, cb) {
           cb(fact.liner.linerid > 0  && fact.frame.style.category && fact.liner.category.indexOf(fact.frame.style.category) == -1 ); 
@@ -573,11 +641,15 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
           cb(false);
         }
 
-    },{ "name": "No Liner (5) only available for Hardwood no art",
-        "priority": 14,
+    },{ "name": "Liner Required unless frame only OR (Mirror and hardwood)",
+        "priority": 18,
         "on": 1,
         "condition": function (fact, cb) {
-          cb(fact.liner.linerid == 5 && ( fact.frame.style.category !='H' || fact.type.indexOf('art') > 0 ) ); 
+          cb(fact.liner.linerid == 5 && 
+            !( this.type == 'frame only' || 
+             ( fact.type.indexOf('mirror') > 0 && fact.frame.style.category =='H' )
+             )
+          ); 
         },
         "consequence": function (cb) {
           this.liner={linerid: "", price_liner: 0};
@@ -590,7 +662,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
         }
 
     },{ "name": "Set Default Liner if FrameID and not linerID",
-        "priority": 15,
+        "priority": 19,
         "on": 1,
         "condition": function (fact, cb) {
           cb(fact.frame.style.styleid && !fact.liner.linerid );  
@@ -634,7 +706,7 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
         }
 
     },{ "name": "Set Liner Price",
-        "priority": 16,
+        "priority": 20,
         "on": 1,
         "condition": function (fact, cb) {
           cb( fact.liner.linerid > 0 ); 
@@ -647,63 +719,6 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
           }
           cb(false);
         }      
-
-    // ART & MIRROR
-
-    },{ "name": "Art Not Set",
-        "priority": 17,
-        "on": 1,
-        "condition": function (fact, cb) {
-          cb( fact.type.indexOf('art') > 0 && fact.art.artid <= 0); 
-        },
-        "consequence": function (cb) {
-          this.canorder=0;
-          this.gototab="design";
-          this.gotopane="art";
-          this.stopRules = true;
-          cb(false);
-        }
-
-    },{ "name": "Mirror Not Set",
-        "priority": 18,
-        "on": 1,
-        "condition": function (fact, cb) {
-          cb( fact.type.indexOf('mirror') > 0 && fact.mirror.mirrorid <= 0); 
-        },
-        "consequence": function (cb) {
-          this.canorder=0;
-          this.gototab="design";
-          this.gotopane="mirror";
-          this.stopRules = true;
-          cb(false);
-        }
-
-    },{ "name": "Set Mirror Price",
-        "priority": 19,
-        "on": 1,
-        "condition": function (fact, cb) {
-          cb( fact.type.indexOf('mirror') > 0 ); 
-        },
-        "consequence": function (cb) {
-          if( this.tv.diagscreensize > 0 && this.mirror.mirrorid > 0 ) {  
-            this.mirror.price_mirror =  $scope.calculateMirrorPrice(this.mirror);
-          } else {
-            this.mirror.price_mirror = 0;
-          }
-          cb(false);
-        }
-
-    },{ "name": "Mirror Preview Image",
-        "priority": 20,
-        "on": 1,
-        "condition": function (fact, cb) {
-          cb( fact.type.indexOf('mirror') >= 0 && fact.mirror.mirrorid > 0); 
-        },
-        "consequence": function (cb) {
-          this.previewimage.preview_front_mirror = "Mirror" + this.tv.speakerlayout + "0" + this.previewimage.wallid + "00.png";
-          //console.log('mirror preview image set to ' + this.previewimage.preview_front_mirror);
-          cb(false);
-        }
 
     // INSTALL
 
@@ -1008,8 +1023,8 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
         },      
         sidedepth: {
           sidedepth:          0.0,
-          sidedepthid:        1133,
-          sidedepthtext:      "Recessed",  
+          sidedepthid:        "",    //1133,
+          sidedepthtext:      "",   //"Recessed",  
           price_sidedepth:    0.0,
         },
         mounted:    {
@@ -1258,6 +1273,14 @@ app.controller('AppCtrl', ['$mdComponentRegistry', '$scope', 'sharedScope', '$sc
 
   $scope.resetType = function() {  
     $scope.configuration.type = '';
+
+    $scope.configuration.sidedepth = {
+          sidedepth:          0.0,
+          sidedepthid:        "", 
+          sidedepthtext:      "",  
+          price_sidedepth:    0.0,
+        };
+
     $mdSidenav('left').close();
     doRules();
   }

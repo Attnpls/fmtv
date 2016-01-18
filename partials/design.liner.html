@@ -5,7 +5,9 @@
     <md-list-item class="md-3-line tvControlItem" 
       ng-repeat="item in liners | filter:{'category': configuration.frame.style.category}:false"
       ng-click="selectLiner(item)" 
-      ng-class="{'selected': configuration.liner.linerid == item.linerid}" >
+      ng-class="{'selected': configuration.liner.linerid == item.linerid}" 
+      ng-show="item.linerid != 5 || configuration.type == 'frame only' || 
+          ( configuration.type.indexOf('mirror') > 0 && configuration.frame.style.category =='H' )">
       <md-button class="md-fab md-mini itemselected" aria-label="selected"
         ng-show="configuration.liner.linerid == item.linerid">
         <md-icon md-svg-icon="check"/>
